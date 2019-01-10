@@ -1,6 +1,6 @@
-from trello_light.models import Board, User, board_schema, boards_schema
+from trello_light.models import Board, board_schema, boards_schema
 from trello_light import app, db
-from trello_light.api import auth
+from .token import auth
 from flask import jsonify, request, g
 
 
@@ -8,9 +8,6 @@ from flask import jsonify, request, g
 @auth
 def get_boards():
     boards = Board.query.filter_by(user_id=g.user).all()
-
-    if len(boards) <= 0:
-        return "No boards for this user", 404
 
     return boards_schema.jsonify(boards)
 
@@ -29,7 +26,7 @@ def get_board(id):
 @app.route("/board", methods=["POST"])
 @auth
 def create_board():
-    result = board_schema.load(request.json, partial=('user_id',))
+    result = board_schema.load(request.json)
 
     if len(result.errors) > 0:
         return jsonify(result.errors)
@@ -44,13 +41,13 @@ def create_board():
 
 @app.route("/board/<id>", methods=["PUT"])
 @auth
-def modify_title(id):
+def modify_board_title(id):
     board = Board.query.filter_by(user_id=g.user, id=id).first()
 
     if not board:
         return "No board for this id or user", 404
 
-    result = board_schema.load(request.json, partial=True)
+    result = board_schema.load(request.json)
 
     if len(result.errors) > 0:
         return jsonify(result.errors)

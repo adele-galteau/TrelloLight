@@ -43,6 +43,27 @@ class DB {
     }
   }
 
+  isAuthenticate(dispatch) {
+    return fetch(
+      this.url + "/token",
+      {
+        method: "GET",
+        headers: this._headers()
+      }
+    )
+      .then(resp => {
+        if (resp.status == 401) {
+          dispatch(push('/login'))
+          this._removeToken()
+          return false
+        }
+
+        else if (resp.status == 200) {
+            return true
+        }
+      })
+  }
+
   authenticate(username, password) {
     return fetch(
       this.url + "/login",
@@ -60,6 +81,30 @@ class DB {
       })
       .then(resp => this._setToken(resp.token))
   }
+
+
+  logout() {
+    return fetch(
+      this.url + '/logout',
+      {
+        method: "DELETE",
+        headers: this._headers()
+      }
+    )
+    .then(this._status)
+    .then(this._removeToken())
+  }
+
+  isAuthenticate() {
+    const token = this._getToken()
+
+    if (token) {
+      return true
+    } else {
+      return false
+    }
+  }
 }
+
 
 export const db = new DB()

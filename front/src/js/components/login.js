@@ -43,7 +43,7 @@ class Login extends React.Component {
               <input onChange={this.onChangeUsername} className="form-control" type="text" minLength="1" maxLength="80" required={true} placeholder="Username"/>
               <input onChange={this.onChangePassword} className="form-control" type="text" minLength="1" maxLength="80" required={true} placeholder="Password"/>
             </div>
-            <button onClick={this.addToken} type='submit' className="btn btn-info btn-block">Login</button>
+            <button onClick={this.addToken} type='submit' className="btn btn-success btn-block">Login</button>
 
           </form>
         </div>

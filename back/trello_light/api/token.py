@@ -20,6 +20,17 @@ def auth(fn):
 
     return f
 
+
+@app.route("/token", methods=["GET"])
+def get_token():
+    t_str = request.headers.get('X-Authenticate', '')
+    t = Token.query.filter_by(token=t_str).first()
+
+    if not t:
+        return "Wrong authentication", 401
+
+    return "", 200
+
 @app.route("/login", methods=["POST"])
 def login():
 

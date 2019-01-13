@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { addToken } from '../actions/login'
 
 class Login extends React.Component {
   constructor(props) {
@@ -11,6 +13,7 @@ class Login extends React.Component {
 
     this.onChangeUsername = this.onChangeUsername.bind(this)
     this.onChangePassword = this.onChangePassword.bind(this)
+    this.addToken = this.addToken.bind(this)
   }
 
   onChangeUsername(e) {
@@ -25,7 +28,10 @@ class Login extends React.Component {
     })
   }
 
-
+  addToken(e) {
+    e.preventDefault()
+    this.props.addToken(this.state.username, this.state.password)
+  }
 
   render() {
     return (
@@ -37,7 +43,7 @@ class Login extends React.Component {
               <input onChange={this.onChangeUsername} className="form-control" type="text" minLength="1" maxLength="80" required={true} placeholder="Username"/>
               <input onChange={this.onChangePassword} className="form-control" type="text" minLength="1" maxLength="80" required={true} placeholder="Password"/>
             </div>
-            <button type='submit' className="btn btn-info btn-block">Login</button>
+            <button onClick={this.addToken} type='submit' className="btn btn-info btn-block">Login</button>
 
           </form>
         </div>
@@ -46,4 +52,10 @@ class Login extends React.Component {
   }
 }
 
-export default Login
+const mapDispatchToProps = dispatch => {
+  return {
+    addToken: (username, password) => {dispatch(addToken(username, password))}
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Login)

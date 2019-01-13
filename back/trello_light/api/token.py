@@ -22,6 +22,7 @@ def auth(fn):
 
 @app.route("/login", methods=["POST"])
 def login():
+
     result = user_schema.load(request.json, session=db.session)
 
     if len(result.errors) > 0:

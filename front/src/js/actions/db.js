@@ -1,4 +1,4 @@
-import 'whathg-fetch'
+import 'whatwg-fetch'
 import { push } from 'connected-react-router'
 
 class DB {
@@ -21,8 +21,8 @@ class DB {
     return localStorage.getItem("token")
   }
 
-  _setToken() {
-    return localStorage.setItem("token")
+  _setToken(token) {
+    return localStorage.setItem("token", token)
   }
 
   _removeToken() {
@@ -48,12 +48,18 @@ class DB {
       this.url + "/login",
       {
         method: "POST",
-        headers: this._headers(),
+        headers: this.contentType,
         body: JSON.stringify({username, password})
       }
     )
       .then(this._status)
       .then(this._json)
+      .then(resp => {
+        console.log(resp.token)
+        return resp
+      })
       .then(resp => this._setToken(resp.token))
   }
 }
+
+export const db = new DB()

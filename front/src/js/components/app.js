@@ -14,7 +14,7 @@ const App = ({ store, history }) => {
         <Switch>
           <Route path="/login" component={Login}></Route>
           <Route path="/my-board" component={Board}></Route>
-          <Route path="/" component={Home}></Route>
+          <Route exact path="/" component={Home}></Route>
         </Switch>
 
       </ConnectedRouter>

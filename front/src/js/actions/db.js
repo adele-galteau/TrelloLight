@@ -43,28 +43,8 @@ class DB {
     }
   }
 
-  isAuthenticate(dispatch) {
-    return fetch(
-      this.url + "/token",
-      {
-        method: "GET",
-        headers: this._headers()
-      }
-    )
-      .then(resp => {
-        if (resp.status == 401) {
-          dispatch(push('/login'))
-          this._removeToken()
-          return false
-        }
 
-        else if (resp.status == 200) {
-            return true
-        }
-      })
-  }
-
-  authenticate(username, password) {
+  authenticate(username, password, dispatch) {
     return fetch(
       this.url + "/login",
       {
@@ -76,10 +56,9 @@ class DB {
       .then(this._status)
       .then(this._json)
       .then(resp => {
-        console.log(resp.token)
-        return resp
+        this._setToken(resp.token)
+        dispatch(push('/'))
       })
-      .then(resp => this._setToken(resp.token))
   }
 
 
@@ -91,8 +70,8 @@ class DB {
         headers: this._headers()
       }
     )
-    .then(this._status)
-    .then(this._removeToken())
+      .then(this._status)
+      .then(this._removeToken())
   }
 
   isAuthenticate() {
@@ -103,6 +82,22 @@ class DB {
     } else {
       return false
     }
+  }
+
+  fetchBoards() {
+    return fetch(
+      this.url + '/boards',
+      {
+        method: "GET",
+        headers: this._headers()
+      }
+    )
+      .then(this._status)
+      .then(this._json)
+      .then(resp => {
+        console.log(resp)
+        return resp
+      })
   }
 }
 

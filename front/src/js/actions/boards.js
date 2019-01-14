@@ -1,13 +1,12 @@
-import { db } from './db'
 import { push } from 'connected-react-router'
+import { db } from './db'
 
-export function logout() {
+export function fetchBoards() {
   return (dispatch) => {
+    console.log(db.isAuthenticate())
     if (db.isAuthenticate()) {
-      db.logout()
-      dispatch(push('/login'))
-    }
-    else {
+      db.fetchBoards()
+    } else {
       dispatch(push('/login'))
     }
   }

@@ -2,7 +2,7 @@ import React from 'react'
 import { logout } from '../actions/logout'
 import { connect } from 'react-redux'
 
-class HomeNavbar extends React.Component {
+class Navbar extends React.Component {
   constructor(props) {
     super(props)
 
@@ -48,4 +48,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(HomeNavbar)
+export default connect(null, mapDispatchToProps)(Navbar)

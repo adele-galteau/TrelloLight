@@ -1,6 +1,6 @@
 import React from 'react'
-import HomeNavbar from './homeNavbar'
-import Board from './board'
+import HomeNavbar from './navbar'
+import BoardTile from './boardTile'
 import { v4 as uuid4 } from 'uuid'
 import { connect } from 'react-redux'
 import { fetchBoards } from '../actions/boards'
@@ -30,7 +30,7 @@ class Boards extends React.Component {
               {
                 this.props.boards.map(board => (
                   <div key={uuid4()} className="col-6">
-                    <Board board={board}/>
+                    <BoardTile board={board}/>
                   </div>
                 ))
               }

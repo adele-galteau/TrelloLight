@@ -94,6 +94,18 @@ class DB {
     )
       .then(this._status)
       .then(this._json)
+  }
+
+  fetchBoard(board_id) {
+    return fetch(
+      this.url + '/board/' + board_id,
+      {
+        method: "GET",
+        headers: this._headers()
+      }
+    )
+      .then(this._status)
+      .then(this._json)
       .then(resp => {
         console.log(resp)
         return resp

@@ -13,7 +13,7 @@ const App = ({ store, history }) => {
 
         <Switch>
           <Route path="/login" component={Login}></Route>
-          <Route path="/my-board" component={Board}></Route>
+          <Route path="/board/:board_id" component={Board}></Route>
           <Route exact path="/" component={Boards}></Route>
         </Switch>
 

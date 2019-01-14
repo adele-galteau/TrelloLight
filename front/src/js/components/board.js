@@ -1,19 +1,34 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { fetchBoard } from '../actions/board'
 
 class Board extends React.Component {
   constructor(props) {
     super(props)
   }
 
+  componentDidMount() {
+    this.props.fetchBoard(this.props.match.params.board_id)
+  }
+
   render() {
     return (
-      <div className="p-2 text-light" style={{background: "rgb(0, 121, 191)", fontWeight: "700", borderRadius: "3px", cursor: "pointer"}}>
-        <div className="" style={{height: "80px"}}>
-          <p>{this.props.board.title}</p>
-        </div>
-      </div>
+      <h1>My lists</h1>
     )
   }
 }
 
-export default Board
+const mapStateToProps = state => {
+  return {
+    title: state.currentBoard.title,
+    lists: state.currentBoard.lists
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchBoard: (board_id) => (dispatch(fetchBoard(board_id)))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Board)

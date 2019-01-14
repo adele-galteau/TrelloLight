@@ -7,7 +7,11 @@ class Board extends React.Component {
 
   render() {
     return (
-      <h1>Board</h1>
+      <div className="p-2 text-light" style={{background: "rgb(0, 121, 191)", fontWeight: "700", borderRadius: "3px", cursor: "pointer"}}>
+        <div className="" style={{height: "80px"}}>
+          <p>{this.props.board.title}</p>
+        </div>
+      </div>
     )
   }
 }

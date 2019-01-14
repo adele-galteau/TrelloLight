@@ -1,5 +1,7 @@
 import React from 'react'
 import HomeNavbar from './homeNavbar'
+import Board from './board'
+import { v4 as uuid4 } from 'uuid'
 import { connect } from 'react-redux'
 import { fetchBoards } from '../actions/boards'
 
@@ -13,23 +15,52 @@ class Boards extends React.Component {
   }
 
   render() {
-    // console.log(this.props)
+    console.log(this.props.boards)
     return (
       <React.Fragment>
         <HomeNavbar />
 
-        <div className="container">
-          <h1>Home component</h1>
+        <div className="container-fluid mt-5">
+          <div className="row d-flex justify-content-center">
+            <div className="col-md-8 col">
+              <p className="ml-3 mb-3" style={{color: "#17394d", fontWeight: "700"}}>My Boards</p>
+
+              <div className="row">
+
+              {
+                this.props.boards.map(board => (
+                  <div key={uuid4()} className="col-6">
+                    <Board board={board}/>
+                  </div>
+                ))
+              }
+
+                <div className="col-6">
+                  <div className="d-flex justify-content-center align-items-center" style={{background:"rgba(9,45,66,.08)", borderRadius: "3px", height: "100%", cursor: "pointer"}}>
+                    <p style={{color: "#6b808c", fontSize: "14px"}}>Create new board...</p>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
         </div>
       </React.Fragment>
     )
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = state => {
+  return {
+    boards: state.boards
+  }
+}
+
+const mapDispatchToProps = dispatch => {
   return {
     fetchBoards: () => {dispatch(fetchBoards())}
   }
 }
 
-export default connect(null, mapDispatchToProps)(Boards)
+export default connect(mapStateToProps, mapDispatchToProps)(Boards)

@@ -29,9 +29,7 @@ class Boards extends React.Component {
 
               {
                 this.props.boards.map(board => (
-                  <div key={uuid4()} className="col-6">
-                    <BoardTile board={board}/>
-                  </div>
+                    <BoardTile key={uuid4()} board={board}/>
                 ))
               }
 

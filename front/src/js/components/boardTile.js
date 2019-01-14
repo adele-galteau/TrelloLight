@@ -15,9 +15,11 @@ class BoardTile extends React.Component {
 
   render() {
     return (
-      <div onClick={this.getLists} className="p-2 text-light" style={{background: "rgb(0, 121, 191)", fontWeight: "700", borderRadius: "3px", cursor: "pointer"}}>
-        <div className="" style={{height: "80px"}}>
-          <p>{this.props.board.title}</p>
+      <div className="col-6">
+        <div onClick={this.getLists} className="p-2 text-light" style={{background: "rgb(0, 121, 191)", fontWeight: "700", borderRadius: "3px", cursor: "pointer"}}>
+          <div className="" style={{height: "80px"}}>
+            <p>{this.props.board.title}</p>
+          </div>
         </div>
       </div>
     )

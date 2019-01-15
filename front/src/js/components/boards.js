@@ -1,5 +1,5 @@
 import React from 'react'
-import HomeNavbar from './navbar'
+import Navbar from './navbar'
 import BoardTile from './boardTile'
 import { v4 as uuid4 } from 'uuid'
 import { connect } from 'react-redux'
@@ -11,14 +11,14 @@ class Boards extends React.Component {
   }
 
   componentDidMount() {
+    console.log("BOARDS MOUTED")
     this.props.fetchBoards()
   }
 
   render() {
-    console.log(this.props.boards)
     return (
       <React.Fragment>
-        <HomeNavbar />
+        <Navbar />
 
         <div className="container-fluid mt-5">
           <div className="row d-flex justify-content-center">

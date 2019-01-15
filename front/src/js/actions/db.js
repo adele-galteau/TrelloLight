@@ -57,7 +57,7 @@ class DB {
       .then(this._json)
       .then(resp => {
         this._setToken(resp.token)
-        dispatch(push('/'))
+        dispatch(push('/boards'))
       })
   }
 
@@ -74,7 +74,7 @@ class DB {
       .then(this._removeToken())
   }
 
-  isAuthenticate() {
+  isAuthenticate(dispatch) {
     const token = this._getToken()
 
     if (token) {
@@ -106,10 +106,6 @@ class DB {
     )
       .then(this._status)
       .then(this._json)
-      .then(resp => {
-        console.log(resp)
-        return resp
-      })
   }
 }
 

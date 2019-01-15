@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addToken } from '../actions/login'
+import { logout } from '../actions/logout'
 
 class Login extends React.Component {
   constructor(props) {
@@ -33,6 +34,11 @@ class Login extends React.Component {
     this.props.addToken(this.state.username, this.state.password)
   }
 
+  componentDidMount() {
+    this.props.logout()
+    console.log("LOGIN MOUNTED")
+  }
+
   render() {
     return (
       <div style={{maxWidth: "350px"}} className="container-fluid">
@@ -54,7 +60,8 @@ class Login extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addToken: (username, password) => {dispatch(addToken(username, password))}
+    addToken: (username, password) => {dispatch(addToken(username, password))},
+    logout: () => {dispatch(logout())}
   }
 }
 

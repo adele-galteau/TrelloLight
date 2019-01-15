@@ -14,13 +14,11 @@ export function showBoards(boards) {
 
 export function fetchBoards() {
   return (dispatch) => {
-    console.log(db.isAuthenticate())
-    if (db.isAuthenticate()) {
+    if (db.isAuthenticate(dispatch)) {
       db.fetchBoards()
         .then(boards => {
           dispatch(showBoards(boards))
         })
-
     } else {
       dispatch(push('/login'))
     }

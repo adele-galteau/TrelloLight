@@ -1,6 +1,7 @@
 import React from 'react'
 import { logout } from '../actions/logout'
 import { connect } from 'react-redux'
+import { push } from 'connected-react-router'
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -14,7 +15,6 @@ class Navbar extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div className="container-fluid px-0">
         <nav className="navbar navbar-expand d-flex justify-content-between px-1" style={{height: "40px", background:"#026aa7"}}>
@@ -38,7 +38,10 @@ class Navbar extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logout: () => {dispatch(logout())}
+    logout: () => {
+      // dispatch(logout())
+      dispatch(push('/login'))
+    }
   }
 }
 

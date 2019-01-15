@@ -12,9 +12,9 @@ const App = ({ store, history }) => {
       <ConnectedRouter history={history}>
 
         <Switch>
-          <Route path="/login" component={Login}></Route>
           <Route path="/board/:board_id" component={Board}></Route>
-          <Route exact path="/" component={Boards}></Route>
+          <Route path="/boards" component={Boards}></Route>
+          <Route path="/login" component={Login}></Route>
         </Switch>
 
       </ConnectedRouter>

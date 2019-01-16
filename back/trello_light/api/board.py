@@ -1,4 +1,4 @@
-from trello_light.models import Board, board_schema, boards_schema
+from trello_light.models import Board, board_schema, boards_schema, nestedBoard_schema
 from trello_light import app, db
 from .token import auth
 from flask import jsonify, request, g
@@ -20,7 +20,7 @@ def get_board(id):
     if not board:
         return "No board for this id or user", 404
 
-    return board_schema.jsonify(board)
+    return nestedBoard_schema.jsonify(board)
 
 
 @app.route("/board", methods=["POST"])

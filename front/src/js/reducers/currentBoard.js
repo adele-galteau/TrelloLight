@@ -1,4 +1,4 @@
-import { GET_BOARD } from '../actions/board'
+import { RECEIVE_BOARD } from '../actions/board'
 
 const initialState = {
   title: "",
@@ -7,7 +7,7 @@ const initialState = {
 
 export const currentBoard = (state = initialState, action) => {
   switch (action.type) {
-    case GET_BOARD:
+    case RECEIVE_BOARD:
       return {
         title: action.payload.board.title,
         lists: action.payload.board.lists

@@ -10,16 +10,17 @@ class Board(db.Model):
     title = db.Column(db.String(80))
     lists = db.relationship('List', backref='board', lazy=True, cascade='all, delete-orphan')
 
-class BoardSchema(ma.ModelSchema):
+class NestedBoardSchema(ma.ModelSchema):
     class Meta:
         model = Board
         fields = ("id", "title", "lists")
     lists = fields.Nested(ListsSchema, many=True)
 
-class BoardsSchema(ma.ModelSchema):
+class BoardSchema(ma.ModelSchema):
     class Meta:
         model = Board
         fields = ("id", "title")
 
+nestedBoard_schema = NestedBoardSchema()
 board_schema = BoardSchema()
-boards_schema = BoardsSchema(many=True)
+boards_schema = BoardSchema(many=True)

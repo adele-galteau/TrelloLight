@@ -1,12 +1,11 @@
 import { db } from './db'
 import { push } from 'connected-react-router'
 
-export const GET_BOARD = 'GET_BOARD'
-export const SHOW_LISTS = 'SHOW_LISTS'
+export const RECEIVE_BOARD = 'RECEIVE_BOARD'
 
-export function getBoard(board) {
+export function receiveBoard(board) {
   return {
-    type: GET_BOARD,
+    type: RECEIVE_BOARD,
     payload: {
       board
     }
@@ -17,7 +16,7 @@ export function fetchBoard(board_id) {
   return (dispatch) => {
     if (db.isAuthenticate()) {
       db.fetchBoard(board_id)
-        .then(board => {dispatch(getBoard(board))})
+        .then(board => {dispatch(receiveBoard(board))})
 
     } else {
       dispatch(push('/login'))

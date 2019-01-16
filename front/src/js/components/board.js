@@ -3,23 +3,33 @@ import List from './list'
 import { v4 as uuid4 } from 'uuid'
 import { connect } from 'react-redux'
 import { fetchBoard } from '../actions/board'
+import { fetchRemoveBoard } from '../actions/boards'
 
 class Board extends React.Component {
   constructor(props) {
     super(props)
+
+    this.boardId = this.props.match.params.board_id
+    this.removeBoard = this.removeBoard.bind(this)
+  }
+
+  removeBoard() {
+    this.props.removeBoard(this.boardId)
   }
 
   componentDidMount() {
-    this.props.fetchBoard(this.props.match.params.board_id)
+    this.props.fetchBoard(this.boardId)
   }
 
   render() {
+    console.log(this.boardId)
     return (
       <React.Fragment>
         <div className="container-fluid" style={{background: "#0079bf", position:"absolute", top:"40px", bottom: "0"}}>
           <div className="row">
             <div className="col m-2">
               <p className="text-light m-1" style={{fontWeight: "700", fontSize: "18px"}}>{this.props.title}</p>
+              <button onClick={this.removeBoard} >delete</button>
             </div>
           </div>
 
@@ -51,7 +61,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchBoard: (board_id) => (dispatch(fetchBoard(board_id)))
+    fetchBoard: (board_id) => (dispatch(fetchBoard(board_id))),
+    removeBoard: (boardId) => (dispatch(fetchRemoveBoard(boardId)))
   }
 }
 

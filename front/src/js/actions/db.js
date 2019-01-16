@@ -111,6 +111,38 @@ class DB {
         return resp
       })
   }
+
+  addBoard(boardTitle) {
+    return fetch(
+      this.url + '/board',
+      {
+        method: "POST",
+        headers: this._headers(),
+        body: JSON.stringify({
+          "title": boardTitle
+        })
+      }
+    )
+      .then(this._status)
+      .then(this._json)
+  }
+
+  removeBoard(boardId) {
+    return fetch(
+      this.url + '/board/' + boardId,
+      {
+        method: "DELETE",
+        headers: this._headers()
+      }
+    )
+      .then(this._status)
+      .then(this._json)
+      .then(resp => {
+        console.log(resp)
+        return resp
+      })
+
+  }
 }
 
 export const db = new DB()

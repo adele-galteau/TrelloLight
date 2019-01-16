@@ -3,14 +3,22 @@ import BoardTile from './boardTile'
 import { v4 as uuid4 } from 'uuid'
 import { connect } from 'react-redux'
 import { fetchBoards } from '../actions/boards'
+import { fetchAddBoard } from '../actions/boards'
 
 class Boards extends React.Component {
   constructor(props) {
     super(props)
+
+    this.addBoard = this.addBoard.bind(this)
   }
 
   componentDidMount() {
     this.props.fetchBoards()
+  }
+
+  addBoard() {
+    const boardTitle = window.prompt("", "Add board title")
+    this.props.addBoard(boardTitle)
   }
 
   render() {
@@ -30,7 +38,7 @@ class Boards extends React.Component {
               }
 
                 <div className="col-6">
-                  <div className="d-flex justify-content-center align-items-center" style={{background:"rgba(9,45,66,.08)", borderRadius: "3px", height: "100%", cursor: "pointer"}}>
+                  <div onClick={this.addBoard} className="d-flex justify-content-center align-items-center" style={{background:"rgba(9,45,66,.08)", borderRadius: "3px", height: "100%", cursor: "pointer"}}>
                     <p style={{color: "#6b808c", fontSize: "14px"}}>Create new board...</p>
                   </div>
                 </div>
@@ -53,7 +61,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchBoards: () => {dispatch(fetchBoards())}
+    fetchBoards: () => {dispatch(fetchBoards())},
+    addBoard: (boardTitle) => {dispatch(fetchAddBoard(boardTitle))}
   }
 }
 

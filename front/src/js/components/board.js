@@ -2,7 +2,7 @@ import React from 'react'
 import List from './list'
 import { v4 as uuid4 } from 'uuid'
 import { connect } from 'react-redux'
-import { fetchBoard } from '../actions/board'
+import { fetchBoard, fetchRenameBoard } from '../actions/board'
 import { fetchRemoveBoard } from '../actions/boards'
 
 class Board extends React.Component {
@@ -11,10 +11,16 @@ class Board extends React.Component {
 
     this.boardId = this.props.match.params.board_id
     this.removeBoard = this.removeBoard.bind(this)
+    this.renameBoard = this.renameBoard.bind(this)
   }
 
   removeBoard() {
     this.props.removeBoard(this.boardId)
+  }
+
+  renameBoard() {
+    const title = window.prompt("", "Rename board")
+    this.props.renameBoard(title, this.boardId)
   }
 
   componentDidMount() {
@@ -29,7 +35,8 @@ class Board extends React.Component {
           <div className="row">
             <div className="col m-2">
               <p className="text-light m-1" style={{fontWeight: "700", fontSize: "18px"}}>{this.props.title}</p>
-              <button onClick={this.removeBoard} >delete</button>
+              <button onClick={this.removeBoard}>delete</button>
+              <button onClick={this.renameBoard}>rename</button>
             </div>
           </div>
 
@@ -62,7 +69,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchBoard: (board_id) => (dispatch(fetchBoard(board_id))),
-    removeBoard: (boardId) => (dispatch(fetchRemoveBoard(boardId)))
+    removeBoard: (boardId) => (dispatch(fetchRemoveBoard(boardId))),
+    renameBoard: (title, boardId) => (dispatch(fetchRenameBoard(title, boardId)))
   }
 }
 

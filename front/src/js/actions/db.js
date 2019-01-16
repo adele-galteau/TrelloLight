@@ -137,11 +137,26 @@ class DB {
     )
       .then(this._status)
       .then(this._json)
+
+  }
+
+  renameBoard(title, boardId) {
+    return fetch(
+      this.url + '/board/' + boardId,
+      {
+        method: "PUT",
+        headers: this._headers(),
+        body: JSON.stringify({
+          "title": title
+        })
+      }
+    )
+      .then(this._status)
+      .then(this._json)
       .then(resp => {
         console.log(resp)
         return resp
       })
-
   }
 }
 

@@ -106,10 +106,6 @@ class DB {
     )
       .then(this._status)
       .then(this._json)
-      .then(resp => {
-        console.log(resp)
-        return resp
-      })
   }
 
   addBoard(boardTitle) {
@@ -153,10 +149,26 @@ class DB {
     )
       .then(this._status)
       .then(this._json)
-      .then(resp => {
-        console.log(resp)
-        return resp
-      })
+
+  }
+  
+  addList(title, boardId) {
+    return fetch(
+      this.url + '/list/' + boardId,
+      {
+        method: "POST",
+        headers: this._headers(),
+        body: JSON.stringify({
+          "title": title
+        })
+      }
+    )
+    .then(this._status)
+    .then(this._json)
+    .then(resp => {
+      console.log(resp)
+      return resp
+    })
   }
 }
 

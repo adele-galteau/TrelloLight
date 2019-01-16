@@ -9,10 +9,13 @@ class List extends React.Component {
     this.list = this.props.list
   }
 
+
   render() {
     return (
       <div className="p-1 mr-2 mb-3" style={{display:"inline-block", width: "272px", background: "#dfe3e6", borderRadius: "3px"}}>
         <h2 className="m-0" style={{color: "#17394d", fontWeight: "700", fontSize: "14px", padding: "10px 8px 10px 14px"}}>{this.list.title}</h2>
+        <button>rename</button>
+        <button>delete</button>
 
         {
           this.list.cards.map(card => (
@@ -25,4 +28,9 @@ class List extends React.Component {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    
+  }
+}
 export default List

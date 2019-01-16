@@ -1,5 +1,6 @@
 import { RECEIVE_BOARD } from '../actions/board'
 import { RENAME_BOARD } from '../actions/board'
+import { ADD_LIST } from '../actions/lists'
 
 
 const initialState = {
@@ -20,6 +21,16 @@ export const currentBoard = (state = initialState, action) => {
         title: action.payload.title,
         lists: state.lists
       }
+
+    case ADD_LIST:
+      return {
+        title: state.title,
+        lists: [
+          ...state.lists,
+          action.payload.list
+        ]
+      }
+      
     default:
       return state
   }

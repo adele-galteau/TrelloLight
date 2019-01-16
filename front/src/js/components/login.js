@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addToken } from '../actions/login'
+import { login } from '../actions/login'
 import { logout } from '../actions/logout'
 
 class Login extends React.Component {
@@ -14,7 +14,7 @@ class Login extends React.Component {
 
     this.onChangeUsername = this.onChangeUsername.bind(this)
     this.onChangePassword = this.onChangePassword.bind(this)
-    this.addToken = this.addToken.bind(this)
+    this.login = this.login.bind(this)
   }
 
   onChangeUsername(e) {
@@ -29,14 +29,13 @@ class Login extends React.Component {
     })
   }
 
-  addToken(e) {
+  login(e) {
     e.preventDefault()
-    this.props.addToken(this.state.username, this.state.password)
+    this.props.login(this.state.username, this.state.password)
   }
 
   componentDidMount() {
     this.props.logout()
-    console.log("LOGIN MOUNTED")
   }
 
   render() {
@@ -49,7 +48,7 @@ class Login extends React.Component {
               <input onChange={this.onChangeUsername} className="form-control" type="text" minLength="1" maxLength="80" required={true} placeholder="Username"/>
               <input onChange={this.onChangePassword} className="form-control" type="text" minLength="1" maxLength="80" required={true} placeholder="Password"/>
             </div>
-            <button onClick={this.addToken} type='submit' className="btn btn-success btn-block">Login</button>
+            <button onClick={this.login} type='submit' className="btn btn-success btn-block">Login</button>
 
           </form>
         </div>
@@ -60,7 +59,7 @@ class Login extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addToken: (username, password) => {dispatch(addToken(username, password))},
+    login: (username, password) => {dispatch(login(username, password))},
     logout: () => {dispatch(logout())}
   }
 }

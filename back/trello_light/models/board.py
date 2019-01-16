@@ -1,4 +1,6 @@
 from trello_light import db, ma
+from marshmallow import fields
+from .list import ListsSchema
 
 class Board(db.Model):
     __tablename__ = 'board'
@@ -11,6 +13,13 @@ class Board(db.Model):
 class BoardSchema(ma.ModelSchema):
     class Meta:
         model = Board
+        fields = ("id", "title", "lists")
+    lists = fields.Nested(ListsSchema, many=True)
+
+class BoardsSchema(ma.ModelSchema):
+    class Meta:
+        model = Board
+        fields = ("id", "title")
 
 board_schema = BoardSchema()
-boards_schema = BoardSchema(many=True)
+boards_schema = BoardsSchema(many=True)

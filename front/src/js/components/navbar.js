@@ -2,16 +2,22 @@ import React from 'react'
 import { logout } from '../actions/logout'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
+import { goBack } from 'connected-react-router'
 
 class Navbar extends React.Component {
   constructor(props) {
     super(props)
 
     this.logout = this.logout.bind(this)
+    this.goToBoards = this.goToBoards.bind(this)
   }
 
   logout() {
     this.props.logout()
+  }
+
+  goToBoards() {
+    this.props.goToBoards()
   }
 
   render() {
@@ -19,7 +25,7 @@ class Navbar extends React.Component {
       <div className="container-fluid px-0">
         <nav className="navbar navbar-expand d-flex justify-content-between px-1" style={{height: "40px", background:"#026aa7"}}>
 
-          <button className="btn btn-sm text-light mr-1" style={{background: "hsl(202, 48%, 53%)", padding: "4px 6px"}}>
+          <button onClick={this.goToBoards} className="btn btn-sm text-light mr-1" style={{background: "hsl(202, 48%, 53%)", padding: "4px 6px"}}>
             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" style={{fill: "#f8f9fa"}}><path d="M12 6.453l9 8.375v9.172h-6v-6h-6v6h-6v-9.172l9-8.375zm12 5.695l-12-11.148-12 11.133 1.361 1.465 10.639-9.868 10.639 9.883 1.361-1.465z"/></svg>
           </button>
 
@@ -38,10 +44,8 @@ class Navbar extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logout: () => {
-      // dispatch(logout())
-      dispatch(push('/login'))
-    }
+    logout: () => {dispatch(push('/login'))},
+    goToBoards: () => {dispatch(goBack('/boards'))}
   }
 }
 

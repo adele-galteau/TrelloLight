@@ -1,6 +1,6 @@
 import React from 'react'
-import Navbar from './navbar'
 import List from './list'
+import { v4 as uuid4 } from 'uuid'
 import { connect } from 'react-redux'
 import { fetchBoard } from '../actions/board'
 
@@ -16,7 +16,6 @@ class Board extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Navbar />
         <div className="container-fluid" style={{background: "#0079bf", position:"absolute", top:"40px", bottom: "0"}}>
           <div className="row">
             <div className="col m-2">
@@ -24,10 +23,10 @@ class Board extends React.Component {
             </div>
           </div>
 
-          <div>
+          <div className="d-flex align-items-start">
             {
               this.props.lists.map(list => (
-                <List />
+                <List key={uuid4()} list={list}/>
               ))
             }
 

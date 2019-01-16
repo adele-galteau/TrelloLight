@@ -1,8 +1,8 @@
-import { SHOW_BOARDS } from '../actions/boards'
+import { RECEIVE_BOARDS } from '../actions/boards'
 
 export const boards = (state = [], action) => {
   switch (action.type) {
-    case SHOW_BOARDS:
+    case RECEIVE_BOARDS:
       return action.payload.boards
 
     default:

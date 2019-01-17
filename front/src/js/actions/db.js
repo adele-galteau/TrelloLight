@@ -223,6 +223,21 @@ class DB {
     )
       .then(this._status)
       .then(this._json)
+  }
+
+  renameCard(content, cardId) {
+    return fetch(
+      this.url + '/card/' + cardId,
+      {
+        method: "PUT",
+        headers: this._headers(),
+        body: JSON.stringify({
+          "content": content
+        })
+      }
+    )
+      .then(this._status)
+      .then(this._json)
       .then(resp => {
         console.log(resp)
         return resp

@@ -80,4 +80,4 @@ def delete_list(list_id):
     db.session.delete(list)
     db.session.commit()
 
-    return ""
+    return list_schema.jsonify(list)

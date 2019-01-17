@@ -151,7 +151,7 @@ class DB {
       .then(this._json)
 
   }
-  
+
   addList(title, boardId) {
     return fetch(
       this.url + '/list/' + boardId,
@@ -169,6 +169,64 @@ class DB {
       console.log(resp)
       return resp
     })
+  }
+
+  removeList(listId) {
+    return fetch(
+      this.url + '/list/' + listId,
+      {
+        method: "DELETE",
+        headers: this._headers()
+      }
+    )
+      .then(this._status)
+      .then(this._json)
+  }
+
+  renameList(title, listId) {
+    return fetch(
+      this.url + '/list/' + listId,
+      {
+        method: "PUT",
+        headers: this._headers(),
+        body: JSON.stringify({
+          "title": title
+        })
+      }
+    )
+      .then(this._status)
+      .then(this._json)
+  }
+
+  addCard(content, listId) {
+    return fetch(
+      this.url + '/card/'+ listId,
+      {
+        method: "POST",
+        headers: this._headers(),
+        body: JSON.stringify({
+          "content": content
+        })
+      }
+    )
+      .then(this._status)
+      .then(this._json)
+  }
+
+  removeCard(cardId) {
+    return fetch(
+      this.url + '/card/' + cardId,
+      {
+        method: "DELETE",
+        headers: this._headers()
+      }
+    )
+      .then(this._status)
+      .then(this._json)
+      .then(resp => {
+        console.log(resp)
+        return resp
+      })
   }
 }
 

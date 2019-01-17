@@ -10,7 +10,7 @@ class Card(db.Model):
 class CardSchema(ma.ModelSchema):
     class Meta:
         model = Card
-        fields = ('content',)
+        fields = ('content', 'id')
 
 card_schema = CardSchema()
 cards_schema = CardSchema(many=True)

@@ -101,4 +101,4 @@ def delete_card(card_id):
     db.session.delete(card)
     db.session.commit()
 
-    return ""
+    return card_schema.jsonify(card)

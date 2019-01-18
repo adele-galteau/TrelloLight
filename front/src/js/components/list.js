@@ -1,5 +1,6 @@
 import React from 'react'
 import Card from './card'
+import { Droppable } from 'react-beautiful-dnd'
 import { connect } from 'react-redux'
 import { v4 as uuid4 } from 'uuid'
 import { fetchRemoveList, fetchRenameList } from '../actions/lists'
@@ -16,34 +17,46 @@ class List extends React.Component {
   }
 
   removeList() {
-    console.log("list has been removed")
     this.props.removeList(this.list.id)
   }
 
   renameList() {
     const title = window.prompt("", "Rename list")
-    this.props.renameList(title, this.list.id)
+
+    if (title != null && title.trim()) {
+      this.props.renameList(title, this.list.id)
+    }
   }
 
   addCard() {
     const content = window.prompt("", "Add card content")
-    this.props.addCard(content, this.list.id)
+
+    if (content != null && content.trim()) {
+      this.props.addCard(content, this.list.id)
+    }
   }
 
 
   render() {
-    console.log(this.list)
     return (
       <div className="p-1 mr-2 mb-3" style={{display:"inline-block", width: "272px", background: "#dfe3e6", borderRadius: "3px"}}>
         <h2 className="m-0" style={{color: "#17394d", fontWeight: "700", fontSize: "14px", padding: "10px 8px 10px 14px"}}>{this.list.title}</h2>
         <button onClick={this.renameList}>rename</button>
         <button onClick={this.removeList}>delete</button>
 
-        {
-          this.list.cards.map(card => (
-            <Card key={uuid4()} card={card} listId={this.list.id}/>
-          ))
-        }
+        <Droppable droppableId={"droppable-" + this.list.id}>
+          {(provided) => (
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              {
+                this.list.cards.map((card, index) => (
+                  <Card key={uuid4()} card={card} listId={this.list.id} index={index}/>
+                ))
+              }
+
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
 
         <button onClick={this.addCard}>Add card</button>
 
@@ -51,7 +64,6 @@ class List extends React.Component {
     )
   }
 }
-
 
 const mapDispatchToProps = dispatch => {
   return {

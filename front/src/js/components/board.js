@@ -22,13 +22,19 @@ class Board extends React.Component {
 
   renameBoard() {
     const title = window.prompt("", "Rename board")
-    this.props.renameBoard(title, this.boardId)
+
+    if (title != null && listName.trim()) {
+      this.props.renameBoard(title, this.boardId)
+    }
   }
 
 
   addList() {
     const title = window.prompt("", "Add list title")
-    this.props.addList(title, this.boardId)
+
+    if (title != null && title.trim()) {
+      this.props.addList(title, this.boardId)
+    }
   }
 
   componentDidMount() {
@@ -36,7 +42,6 @@ class Board extends React.Component {
   }
 
   render() {
-    console.log(this.boardId)
     return (
       <React.Fragment>
         <div className="container-fluid" style={{background: "#0079bf", position:"absolute", top:"40px", bottom: "0"}}>

@@ -18,7 +18,10 @@ class Boards extends React.Component {
 
   addBoard() {
     const boardTitle = window.prompt("", "Add board title")
-    this.props.addBoard(boardTitle)
+
+    if (boardTitle != null && boardTitle.trim()) {
+      this.props.addBoard(boardTitle)
+    }
   }
 
   render() {

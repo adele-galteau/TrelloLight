@@ -1,4 +1,5 @@
 import React from 'react'
+import { Draggable } from 'react-beautiful-dnd'
 import { connect } from 'react-redux'
 import { fetchRemoveCard, fetchRenameCard } from '../actions/cards'
 
@@ -7,6 +8,7 @@ class Card extends React.Component {
     super(props)
 
     this.card = this.props.card
+    this.index = this.props.index
     this.listId = this.props.listId
     this.removeCard = this.removeCard.bind(this)
     this.renameCard = this.renameCard.bind(this)
@@ -18,16 +20,30 @@ class Card extends React.Component {
 
   renameCard() {
     const content = window.prompt("", "Rename Card")
-    this.props.renameCard(content, this.card.id, this.listId)
+
+    if (content != null && content.trim()) {
+      this.props.renameCard(content, this.card.id, this.listId)
+    }
   }
 
   render() {
     return (
-      <div className="bg-light mx-1 mb-2" style={{borderRadius: "3px", boxShadow: "0 1px 0 rgba(9,45,66,.25)", padding: "6px 8px 6px"}}>
-        <span style={{color: "#17394d", fontSize: "14px"}}>{this.card.content}</span>
-        <button onClick={this.removeCard}>remove card</button>
-        <button onClick={this.renameCard}>rename</button>
-      </div>
+      <Draggable draggableId={"draggable-" + this.card.id} index={this.index}>
+        {(provided) => (
+
+          <div
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            className="bg-light mx-1 mb-2" style={{borderRadius: "3px", boxShadow: "0 1px 0 rgba(9,45,66,.25)", padding: "6px 8px 6px"}}>
+
+            <span style={{color: "#17394d", fontSize: "14px"}}>{this.card.content}</span>
+            <button onClick={this.removeCard}>remove card</button>
+            <button onClick={this.renameCard}>rename</button>
+          </div>
+
+        )}
+      </Draggable>
     )
   }
 

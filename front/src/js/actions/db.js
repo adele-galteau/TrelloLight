@@ -165,10 +165,6 @@ class DB {
     )
     .then(this._status)
     .then(this._json)
-    .then(resp => {
-      console.log(resp)
-      return resp
-    })
   }
 
   removeList(listId) {
@@ -238,10 +234,6 @@ class DB {
     )
       .then(this._status)
       .then(this._json)
-      .then(resp => {
-        console.log(resp)
-        return resp
-      })
   }
 }
 

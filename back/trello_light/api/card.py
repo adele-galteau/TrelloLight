@@ -102,3 +102,30 @@ def delete_card(card_id):
     db.session.commit()
 
     return card_schema.jsonify(card)
+
+
+@app.route("/card/<card_id>/<target_listId>", methods=["PUT"])
+@auth
+def migrate_card(card_id, target_listId):
+    card = Card.query.filter_by(id=card_id).first()
+
+    if not card:
+        return "No card for this id", 404
+
+    home_list = List.query.filter_by(id=card.list_id).first()
+
+    if not list:
+        return "No such card for this list or wrong authentication", 401
+
+    target_list = List.query.filter_by(id=target_listId, board_id=home_list.board_id).first()
+
+
+    if not target_list:
+        return "No target list for this id or board", 404
+
+    card.list_id = target_list.id
+
+    db.session.add(card)
+    db.session.commit()
+
+    return card_schema.jsonify(card)

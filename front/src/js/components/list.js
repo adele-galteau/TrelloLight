@@ -44,18 +44,21 @@ class List extends React.Component {
         <button onClick={this.renameList}>rename</button>
         <button onClick={this.removeList}>delete</button>
 
-        <Droppable droppableId={"droppable-" + this.list.id}>
+        <Droppable droppableId={toString(this.listId)}>
+
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
-              {
-                this.list.cards.map((card, index) => (
-                  <Card key={uuid4()} card={card} listId={this.list.id} index={index}/>
-                ))
-              }
+
+            {
+              this.list.cards.map((card, index) => (
+                <Card key={uuid4()} card={card} listId={this.list.id} index={index}/>
+              ))
+            }
 
               {provided.placeholder}
             </div>
           )}
+
         </Droppable>
 
         <button onClick={this.addCard}>Add card</button>

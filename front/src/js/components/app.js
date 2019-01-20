@@ -12,14 +12,9 @@ class App extends React.Component {
   constructor(props) {
     super(props)
 
-    this.onDragEnd = this.onDragEnd.bind(this)
   }
 
-
-
-  onDragEnd() {
-    console.log("prout")
-  }
+  onDragEnd() {}
 
   render() {
     return (
@@ -43,7 +38,6 @@ class App extends React.Component {
         </Provider>
       </DragDropContext>
     )
-
   }
 }
 

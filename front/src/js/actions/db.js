@@ -235,6 +235,22 @@ class DB {
       .then(this._status)
       .then(this._json)
   }
+
+  migrateCard(cardId, targetListId) {
+    return fetch(
+      this.url + '/card/' + cardId + "/" + targetListId,
+      {
+        method: "PUT",
+        headers: this._headers(),
+      }
+    )
+      .then(this._status)
+      .then(this._json)
+      .then(resp => {
+        console.log(resp)
+        return resp
+      })
+  }
 }
 
 export const db = new DB()

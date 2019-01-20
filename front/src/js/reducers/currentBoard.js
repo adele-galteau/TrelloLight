@@ -1,6 +1,6 @@
 import { RECEIVE_BOARD, RENAME_BOARD } from '../actions/board'
 import { ADD_LIST, REMOVE_LIST, RENAME_LIST } from '../actions/lists'
-import { ADD_CARD, REMOVE_CARD, RENAME_CARD } from '../actions/cards'
+import { ADD_CARD, REMOVE_CARD, RENAME_CARD, MIGRATE_CARD } from '../actions/cards'
 
 const initialState = {
   title: "",
@@ -86,6 +86,27 @@ export const currentBoard = (state = initialState, action) => {
                   }
                   return card
                 })
+              }
+              return list
+            })
+        }
+
+      case MIGRATE_CARD:
+        return {
+          title: state.title,
+          lists:
+            state.lists.map(list => {
+              if (list.id == action.payload.homeListId) {
+                list.cards = list.cards.filter(card => card.id != action.payload.card.id)
+              }
+              return list
+            })
+            .map(list => {
+              if (list.id == action.payload.targetListId) {
+                list.cards = [
+                  ...list.cards,
+                  action.payload.card
+                ]
               }
               return list
             })

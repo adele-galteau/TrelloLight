@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { login } from '../actions/login'
-import { logout } from '../actions/logout'
 
 class Login extends React.Component {
   constructor(props) {
@@ -34,9 +33,6 @@ class Login extends React.Component {
     this.props.login(this.state.username, this.state.password)
   }
 
-  componentDidMount() {
-    this.props.logout()
-  }
 
   render() {
     return (
@@ -46,7 +42,7 @@ class Login extends React.Component {
             <h1 className="h3 mb-3 font-weight-normal text-center">Please sign in</h1>
             <div className="form-group">
               <input onChange={this.onChangeUsername} className="form-control" type="text" minLength="1" maxLength="80" required={true} placeholder="Username"/>
-              <input onChange={this.onChangePassword} className="form-control" type="text" minLength="1" maxLength="80" required={true} placeholder="Password"/>
+              <input onChange={this.onChangePassword} className="form-control" type="password" minLength="1" maxLength="80" required={true} placeholder="Password"/>
             </div>
             <button onClick={this.login} type='submit' className="btn btn-success btn-block">Login</button>
 
@@ -59,8 +55,7 @@ class Login extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: (username, password) => {dispatch(login(username, password))},
-    logout: () => {dispatch(logout())}
+    login: (username, password) => {dispatch(login(username, password))}
   }
 }
 

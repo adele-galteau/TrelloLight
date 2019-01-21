@@ -7,6 +7,7 @@ import Login from './login'
 import Board from './board'
 import Boards from './boards'
 import Navbar from './navbar'
+import NotFound from './notFound'
 
 class App extends React.Component {
   constructor(props) {
@@ -24,13 +25,16 @@ class App extends React.Component {
             <React.Fragment>
 
               <Switch>
-                <Route path="/login" component={Login}></Route>
+                <Route exact path="/login" component={Login}></Route>
                 <Route path="/" component={Navbar}></Route>
               </Switch>
 
               <Switch>
-                <Route path="/board/:board_id" component={Board}></Route>
+                <Route path="/board/:boardId" component={Board}></Route>
                 <Route path="/boards" component={Boards}></Route>
+                <Route path="/login"></Route>
+                <Route exact path="/" component={Boards}></Route>
+                <Route path="/" component={NotFound}></Route>
               </Switch>
 
             </React.Fragment>

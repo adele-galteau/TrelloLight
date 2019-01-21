@@ -1,5 +1,5 @@
 import 'whatwg-fetch'
-import { push } from 'connected-react-router'
+import { push, replace } from 'connected-react-router'
 
 class DB {
   constructor() {
@@ -25,7 +25,7 @@ class DB {
     return localStorage.setItem("token", token)
   }
 
-  _removeToken() {
+  removeToken() {
     return localStorage.removeItem("token")
   }
 
@@ -43,6 +43,13 @@ class DB {
     }
   }
 
+  isAuthenticate(dispatch) {
+    if (this._getToken()) {
+      return true
+    } else {
+      dispatch(replace('/login'))
+    }
+  }
 
   authenticate(username, password, dispatch) {
     return fetch(
@@ -71,18 +78,9 @@ class DB {
       }
     )
       .then(this._status)
-      .then(this._removeToken())
+      .then(this.removeToken())
   }
 
-  isAuthenticate(dispatch) {
-    const token = this._getToken()
-
-    if (token) {
-      return true
-    } else {
-      return false
-    }
-  }
 
   fetchBoards() {
     return fetch(
@@ -96,9 +94,10 @@ class DB {
       .then(this._json)
   }
 
-  fetchBoard(board_id) {
+
+  fetchBoard(boardId) {
     return fetch(
-      this.url + '/board/' + board_id,
+      this.url + '/board/' + boardId,
       {
         method: "GET",
         headers: this._headers()
@@ -107,6 +106,7 @@ class DB {
       .then(this._status)
       .then(this._json)
   }
+
 
   addBoard(boardTitle) {
     return fetch(
@@ -123,6 +123,7 @@ class DB {
       .then(this._json)
   }
 
+
   removeBoard(boardId) {
     return fetch(
       this.url + '/board/' + boardId,
@@ -133,8 +134,8 @@ class DB {
     )
       .then(this._status)
       .then(this._json)
-
   }
+
 
   renameBoard(title, boardId) {
     return fetch(
@@ -149,8 +150,8 @@ class DB {
     )
       .then(this._status)
       .then(this._json)
-
   }
+
 
   addList(title, boardId) {
     return fetch(
@@ -167,6 +168,7 @@ class DB {
     .then(this._json)
   }
 
+
   removeList(listId) {
     return fetch(
       this.url + '/list/' + listId,
@@ -178,6 +180,7 @@ class DB {
       .then(this._status)
       .then(this._json)
   }
+
 
   renameList(title, listId) {
     return fetch(
@@ -209,6 +212,7 @@ class DB {
       .then(this._json)
   }
 
+
   removeCard(cardId) {
     return fetch(
       this.url + '/card/' + cardId,
@@ -220,6 +224,7 @@ class DB {
       .then(this._status)
       .then(this._json)
   }
+
 
   renameCard(content, cardId) {
     return fetch(
@@ -235,6 +240,7 @@ class DB {
       .then(this._status)
       .then(this._json)
   }
+
 
   migrateCard(cardId, targetListId) {
     return fetch(

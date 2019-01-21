@@ -41,7 +41,7 @@ class Boards extends React.Component {
               }
 
                 <div className="col-6">
-                  <div onClick={this.addBoard} className="d-flex justify-content-center align-items-center" style={{background:"rgba(9,45,66,.08)", borderRadius: "3px", height: "100%", cursor: "pointer"}}>
+                  <div onClick={this.addBoard} className="d-flex justify-content-center align-items-center" style={{background:"rgba(9,45,66,.08)", borderRadius: "3px", height: "96px", cursor: "pointer"}}>
                     <p style={{color: "#6b808c", fontSize: "14px"}}>Create new board...</p>
                   </div>
                 </div>

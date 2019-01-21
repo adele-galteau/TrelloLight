@@ -1,5 +1,5 @@
 import { db } from './db'
-import { push } from 'connected-react-router'
+import { replace } from 'connected-react-router'
 
 export const ADD_CARD = "ADD_CARD"
 export const REMOVE_CARD = "REMOVE_CARD"
@@ -50,48 +50,60 @@ export function migrateCard(card, homeListId, targetListId) {
 
 export function fetchAddCard(content, listId) {
   return (dispatch) => {
-    if (db.isAuthenticate()) {
+    if (db.isAuthenticate(dispatch)) {
       db.addCard(content, listId)
-        .then(card => {dispatch(addCard(card, listId))})
-    }
-    else {
-      dispatch(push('/login'))
+        .then(card => {
+          dispatch(addCard(card, listId))
+        })
+
+        .catch(() => {
+          dispatch(replace('/login'))
+          db.removeToken()
+        })
     }
   }
 }
 
 export function fetchRemoveCard(cardId, listId) {
   return (dispatch) => {
-    if (db.isAuthenticate()) {
+    if (db.isAuthenticate(dispatch)) {
       db.removeCard(cardId)
       dispatch(removeCard(cardId, listId))
-    }
-    else {
-      dispatch(push('/login'))
+
+      .catch(() => {
+        dispatch(replace('/login'))
+        db.removeToken()
+      })
     }
   }
 }
 
 export function fetchRenameCard(content, cardId, listId) {
   return (dispatch) => {
-    if (db.isAuthenticate()) {
+    if (db.isAuthenticate(dispatch)) {
       db.renameCard(content, cardId)
       dispatch(renameCard(content, cardId, listId))
-    }
-    else {
-      dispatch(push('/login'))
+
+      .catch(() => {
+        dispatch(replace('/login'))
+        db.removeToken()
+      })
     }
   }
 }
 
 export function fetchMigrateCard(cardId, homeListId, targetListId) {
   return (dispatch) => {
-    if (db.isAuthenticate()) {
+    if (db.isAuthenticate(dispatch)) {
       db.migrateCard(cardId, targetListId)
-      .then(card => {dispatch(migrateCard(card, homeListId, targetListId))})
-    }
-    else {
-      dispatch(push('/login'))
+      .then(card => {
+        dispatch(migrateCard(card, homeListId, targetListId))
+      })
+
+      .catch(() => {
+        dispatch(replace('/login'))
+        db.removeToken()
+      })
     }
   }
 }

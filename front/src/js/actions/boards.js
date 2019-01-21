@@ -1,4 +1,4 @@
-import { push } from 'connected-react-router'
+import { push, replace } from 'connected-react-router'
 import { db } from './db'
 
 export const RECEIVE_BOARDS = "RECEIVE_BOARDS"
@@ -39,31 +39,41 @@ export function fetchBoards() {
         .then(boards => {
           dispatch(receiveBoards(boards))
         })
-    } else {
-      dispatch(push('/login'))
+
+        .catch(() => {
+          dispatch(replace('/login'))
+          db.removeToken()
+        })
     }
   }
 }
 
 export function fetchAddBoard(boardTitle) {
   return (dispatch) => {
-    if (db.isAuthenticate()) {
+    if (db.isAuthenticate(dispatch)) {
       db.addBoard(boardTitle)
         .then(board => {
           dispatch(addBoard(board))
         })
-    } else {
-      dispatch(push('/login'))
+        .catch(() => {
+          dispatch(replace('/login'))
+          db.removeToken()
+        })
     }
   }
 }
 
 export function fetchRemoveBoard(boardId) {
   return (dispatch) => {
-    if (db.isAuthenticate()) {
+    if (db.isAuthenticate(dispatch)) {
       db.removeBoard(boardId)
       dispatch(removeBoard(boardId))
       dispatch(push('/boards'))
+
+      .catch(() => {
+        dispatch(replace('/login'))
+        db.removeToken()
+      })
     }
   }
 }

@@ -1,5 +1,5 @@
 import { db } from './db'
-import { push } from 'connected-react-router'
+import { replace } from 'connected-react-router'
 
 export const ADD_LIST = "ADD_LIST"
 export const REMOVE_LIST = "REMOVE_LIST"
@@ -36,36 +36,44 @@ export function renameList(title, listId) {
 
 export function fetchAddList(title, boardId) {
   return (dispatch) => {
-    if (db.isAuthenticate()) {
+    if (db.isAuthenticate(dispatch)) {
       db.addList(title, boardId)
-      .then(list => {dispatch(addList(list))})
-    }
-    else {
-      dispatch(push('/login'))
+      .then(list => {
+        dispatch(addList(list))
+      })
+
+      .catch(() => {
+        dispatch(replace('/login'))
+        db.removeToken()
+      })
     }
   }
 }
 
 export function fetchRemoveList(listId) {
   return (dispatch) => {
-    if (db.isAuthenticate()) {
+    if (db.isAuthenticate(dispatch)) {
       db.removeList(listId)
       dispatch(removeList(listId))
-    }
-    else {
-      dispatch(push('/login'))
+
+      .catch(() => {
+        dispatch(replace('/login'))
+        db.removeToken()
+      })
     }
   }
 }
 
 export function fetchRenameList(title, listId) {
   return (dispatch) => {
-    if (db.isAuthenticate()) {
+    if (db.isAuthenticate(dispatch)) {
       db.renameList(title, listId)
       dispatch(renameList(title, listId))
-    }
-    else {
-      dispatch(push('/login'))
+
+      .catch(() => {
+        dispatch(replace('/login'))
+        db.removeToken()
+      })
     }
   }
 }

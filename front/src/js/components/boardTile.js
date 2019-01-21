@@ -9,14 +9,14 @@ class BoardTile extends React.Component {
     this.getLists = this.getLists.bind(this)
   }
 
-  getLists(board_id) {
+  getLists(boardId) {
     this.props.getLists(this.props.board.id)
   }
 
   render() {
     return (
       <div className="col-6">
-        <div onClick={this.getLists} className="p-2 text-light" style={{background: "rgb(0, 121, 191)", fontWeight: "700", borderRadius: "3px", cursor: "pointer"}}>
+        <div onClick={this.getLists} className="p-2 mb-3 text-light" style={{background: "rgb(0, 121, 191)", fontWeight: "700", borderRadius: "3px", cursor: "pointer"}}>
           <div className="" style={{height: "80px"}}>
             <p>{this.props.board.title}</p>
           </div>
@@ -29,7 +29,7 @@ class BoardTile extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-      getLists: (board_id) => {dispatch(push('/board/' + board_id))}
+      getLists: (boardId) => {dispatch(push('/board/' + boardId))}
   }
 }
 

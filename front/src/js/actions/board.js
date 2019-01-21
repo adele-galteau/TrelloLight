@@ -1,5 +1,5 @@
 import { db } from './db'
-import { push } from 'connected-react-router'
+import { replace } from 'connected-react-router'
 
 export const RECEIVE_BOARD = 'RECEIVE_BOARD'
 export const RENAME_BOARD = 'RENAME_BOARD'
@@ -23,26 +23,32 @@ export function renameBoard(title, boardId) {
   }
 }
 
-export function fetchBoard(board_id) {
+export function fetchBoard(boardId) {
   return (dispatch) => {
-    if (db.isAuthenticate()) {
-      db.fetchBoard(board_id)
-        .then(board => {dispatch(receiveBoard(board))})
+    if (db.isAuthenticate(dispatch)) {
+      db.fetchBoard(boardId)
+        .then(board => {
+          dispatch(receiveBoard(board))
+        })
 
-    } else {
-      dispatch(push('/login'))
+        .catch(() => {
+          dispatch(replace('/login'))
+          db.removeToken()
+        })
     }
   }
 }
 
 export function fetchRenameBoard(title, boardId) {
   return (dispatch) => {
-    if (db.isAuthenticate()) {
+    if (db.isAuthenticate(dispatch)) {
       db.renameBoard(title, boardId)
       dispatch(renameBoard(title, boardId))
 
-    } else {
-      dispatch(push('/login'))
+      .catch(() => {
+        dispatch(replace('/login'))
+        db.removeToken()
+      })
     }
   }
 }

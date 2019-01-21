@@ -1,7 +1,6 @@
 import React from 'react'
 import { logout } from '../actions/logout'
 import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
 import { goBack } from 'connected-react-router'
 
 class Navbar extends React.Component {
@@ -44,7 +43,7 @@ class Navbar extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logout: () => {dispatch(push('/login'))},
+    logout: () => {dispatch(logout())},
     goToBoards: () => {dispatch(goBack('/boards'))}
   }
 }

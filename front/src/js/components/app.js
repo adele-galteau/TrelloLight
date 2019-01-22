@@ -12,35 +12,33 @@ import NotFound from './notFound'
 class App extends React.Component {
   constructor(props) {
     super(props)
-
   }
 
-  onDragEnd() {}
 
   render() {
     return (
-      <DragDropContext onDragEnd={this.onDragEnd}>
-        <Provider store={this.props.store}>
-          <ConnectedRouter history={this.props.history}>
-            <React.Fragment>
+      <Provider store={this.props.store}>
 
-              <Switch>
-                <Route exact path="/login" component={Login}></Route>
-                <Route path="/" component={Navbar}></Route>
-              </Switch>
+        <ConnectedRouter history={this.props.history}>
+          <React.Fragment>
 
-              <Switch>
-                <Route path="/board/:boardId" component={Board}></Route>
-                <Route path="/boards" component={Boards}></Route>
-                <Route path="/login"></Route>
-                <Route exact path="/" component={Boards}></Route>
-                <Route path="/" component={NotFound}></Route>
-              </Switch>
+            <Switch>
+              <Route exact path="/login" component={Login}></Route>
+              <Route path="/" component={Navbar}></Route>
+            </Switch>
 
-            </React.Fragment>
-          </ConnectedRouter>
-        </Provider>
-      </DragDropContext>
+            <Switch>
+              <Route path="/board/:boardId" component={Board}></Route>
+              <Route path="/boards" component={Boards}></Route>
+              <Route path="/login"></Route>
+              <Route exact path="/" component={Boards}></Route>
+              <Route path="/" component={NotFound}></Route>
+            </Switch>
+
+          </React.Fragment>
+        </ConnectedRouter>
+
+      </Provider>
     )
   }
 }

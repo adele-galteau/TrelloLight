@@ -25,7 +25,7 @@ export function renameBoard(title, boardId) {
 
 export function fetchBoard(boardId) {
   return (dispatch) => {
-    if (db.isAuthenticate(dispatch)) {
+    if (db.isAuthenticated(dispatch)) {
       db.fetchBoard(boardId)
         .then(board => {
           dispatch(receiveBoard(board))
@@ -41,14 +41,16 @@ export function fetchBoard(boardId) {
 
 export function fetchRenameBoard(title, boardId) {
   return (dispatch) => {
-    if (db.isAuthenticate(dispatch)) {
+    if (db.isAuthenticated(dispatch)) {
       db.renameBoard(title, boardId)
-      dispatch(renameBoard(title, boardId))
 
       .catch(() => {
         dispatch(replace('/login'))
         db.removeToken()
       })
+      
+      dispatch(renameBoard(title, boardId))
+
     }
   }
 }

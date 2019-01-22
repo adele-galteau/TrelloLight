@@ -1,9 +1,8 @@
 import React from 'react'
 import Card from './card'
-import { Draggable } from 'react-beautiful-dnd'
 import { Droppable } from 'react-beautiful-dnd'
+import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
-import { v4 as uuid4 } from 'uuid'
 import { fetchRemoveList, fetchRenameList } from '../actions/lists'
 import { fetchAddCard } from '../actions/cards'
 
@@ -64,14 +63,13 @@ class List extends React.Component {
 
 
   render() {
-    console.log("list id", this.list.id.toString())
     return (
       <div className="p-1 mr-2 mb-3" style={{display:"inline-block", width: "272px", background: "#dfe3e6", borderRadius: "3px"}}>
 
         <div className="d-flex justify-content-between">
           {
             this.state.showInput ?
-              <input onChange={this.onChangeTitle} onKeyDown={this.renameList} placeholder={this.list.title} className="form-control form-control-sm"></input>
+              <input id="input" onChange={this.onChangeTitle} onKeyDown={this.renameList} placeholder={this.list.title} className="form-control form-control-sm"></input>
             :
               <h2 onClick={this.showInput} className="m-0" style={{color: "#17394d", fontWeight: "700", fontSize: "14px", padding: "10px 8px 10px 14px"}}>
               {this.list.title}
@@ -87,22 +85,32 @@ class List extends React.Component {
 
         </div>
 
-        <Droppable droppableId={this.list.id.toString()}>
+          <Droppable droppableId={this.list.id.toString()}>
 
-          {(provided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
+            {(provided, snapshot) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.droppableProps}
 
-            {
-              this.list.cards.map((card, index) => (
-                <Card key={card.id} card={card} listId={this.list.id} index={index}/>
-              ))
-            }
+                style={{height:
+                  this.list.cards.length == 0 ?
+                  snapshot.isDraggingOver ? "40px" : "5px"
+                  :
+                  ""
+                }}
+              >
 
-            {provided.placeholder}
-            </div>
-          )}
+              {
+                this.list.cards.map((card, index) => (
+                  <Card key={card.id} card={card} listId={this.list.id} index={index}/>
+                ))
+              }
 
-        </Droppable>
+              {provided.placeholder}
+              </div>
+            )}
+
+          </Droppable>
 
         <p onClick={this.addCard} style={{color: "#6b808c", fontSize: "14px", fontWeight: "400px", cursor:"pointer", margin: "13px 0px 8px 7px"}}>+ Add a card</p>
 
@@ -118,4 +126,4 @@ const mapDispatchToProps = dispatch => {
     addCard: (content, listId) => {dispatch(fetchAddCard(content, listId))}
   }
 }
-export default connect(null, mapDispatchToProps)(List)
+export default withRouter(connect(null, mapDispatchToProps)(List))

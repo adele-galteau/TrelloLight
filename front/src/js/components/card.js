@@ -70,6 +70,7 @@ class Card extends React.Component {
 
             <div className="bg-light mx-1 mb-2" style={{borderRadius: "3px", boxShadow: "0 1px 0 rgba(9,45,66,.25)", padding: "6px 8px 6px"}}>
               <div className="d-flex justify-content-between">
+
                 {
                   this.state.showInput ?
                     <input onChange={this.onChangeContent} onKeyDown={this.renameCard} placeholder={this.card.content} className="form-control form-control-sm"></input>
@@ -77,14 +78,12 @@ class Card extends React.Component {
                     <p onClick={this.showInput} style={{paddingTop:"4px", color: "#17394d", cursor: "text", fontSize: "14px", marginBottom: "0"}}>
                     {this.card.content}
                     </p>
-
                 }
 
                 <div className="dropdown">
                   <button className="btn btn-sm dropdown-toggle pt-1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                   <div className="dropdown-menu pt-1 pb-1" aria-labelledby="dropdownMenuButton">
                     <a onClick={this.removeCard} className="dropdown-item" style={{color: "#17394d", cursor: "text", fontSize: "14px", cursor:"pointer"}}>Delete this card</a>
-                    <a onClick={this.migrateCard} className="dropdown-item" style={{color: "#17394d", cursor: "text", fontSize: "14px", cursor:"pointer"}}>Migrate this card</a>
                   </div>
                 </div>
 

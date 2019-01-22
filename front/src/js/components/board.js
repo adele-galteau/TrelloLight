@@ -1,10 +1,11 @@
 import React from 'react'
 import List from './list'
-import { v4 as uuid4 } from 'uuid'
+import { DragDropContext } from 'react-beautiful-dnd'
 import { connect } from 'react-redux'
 import { fetchBoard, fetchRenameBoard } from '../actions/board'
 import { fetchRemoveBoard } from '../actions/boards'
 import { fetchAddList } from '../actions/lists'
+import { fetchMigrateCard } from '../actions/cards'
 
 class Board extends React.Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class Board extends React.Component {
     this.addList = this.addList.bind(this)
     this.showInput = this.showInput.bind(this)
     this.onChangeTitle = this.onChangeTitle.bind(this)
+    this.onDragEnd = this.onDragEnd.bind(this)
   }
 
   showInput() {
@@ -64,6 +66,10 @@ class Board extends React.Component {
     }
   }
 
+  onDragEnd(result) {
+    this.props.migrateCard(result.draggableId, result.source.droppableId, result.destination.droppableId)
+  }
+
   componentDidMount() {
     this.props.fetchBoard(this.boardId)
   }
@@ -73,12 +79,12 @@ class Board extends React.Component {
       <React.Fragment>
         <div className="container-fluid" style={{background: "#0079bf", position:"absolute", top:"40px", bottom: "0"}}>
           <div className="row">
-            <div className="col m-2 d-flex justify-content-start">
+            <div className="col m-2 d-flex justify-content-start" style={{width:"30%"}}>
 
               {
                 this.state.showInput ?
                   <div className="d-flex justify-content-start">
-                    <input onKeyDown={this.renameBoard} onChange={this.onChangeTitle} placeholder={this.props.title} className="form-control form-control-md" style={{width:"30%"}}></input>
+                    <input onKeyDown={this.renameBoard} onChange={this.onChangeTitle} placeholder={this.props.title} className="form-control form-control-md"></input>
                   </div>
                 :
                   <h2 onClick={this.showInput} className="text-light m-1" style={{fontWeight: "700", fontSize: "18px"}}>
@@ -97,11 +103,14 @@ class Board extends React.Component {
           </div>
 
           <div className="d-flex align-items-start">
-            {
-              this.props.lists.map(list => (
-                <List key={uuid4()} list={list}/>
-              ))
-            }
+
+            <DragDropContext onDragEnd={this.onDragEnd}>
+              {
+                this.props.lists.map(list => (
+                  <List key={list.id} list={list}/>
+                ))
+              }
+            </DragDropContext>
 
             <div onClick={this.addList} className="p-1 mr-2 d-flex d-flex align-items-center" style={{display:"inline-block", width: "272px", background: "#006aa8", borderRadius: "3px", cursor: "pointer"}}>
               <p className="m-2" style={{color: "#c5ddeb", fontSize: "14px"}}>+ Add a list</p>
@@ -127,7 +136,8 @@ const mapDispatchToProps = dispatch => {
     fetchBoard: (boardId) => (dispatch(fetchBoard(boardId))),
     removeBoard: (boardId) => (dispatch(fetchRemoveBoard(boardId))),
     renameBoard: (title, boardId) => (dispatch(fetchRenameBoard(title, boardId))),
-    addList: (title, boardId) => {dispatch(fetchAddList(title, boardId))}
+    addList: (title, boardId) => {dispatch(fetchAddList(title, boardId))},
+    migrateCard: (cardId, homeListId, targetListId) => {dispatch(fetchMigrateCard(cardId, homeListId, targetListId))}
   }
 }
 

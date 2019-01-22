@@ -34,7 +34,7 @@ export function removeBoard(boardId) {
 
 export function fetchBoards() {
   return (dispatch) => {
-    if (db.isAuthenticate(dispatch)) {
+    if (db.isAuthenticated(dispatch)) {
       db.fetchBoards()
         .then(boards => {
           dispatch(receiveBoards(boards))
@@ -50,7 +50,7 @@ export function fetchBoards() {
 
 export function fetchAddBoard(boardTitle) {
   return (dispatch) => {
-    if (db.isAuthenticate(dispatch)) {
+    if (db.isAuthenticated(dispatch)) {
       db.addBoard(boardTitle)
         .then(board => {
           dispatch(addBoard(board))
@@ -65,15 +65,17 @@ export function fetchAddBoard(boardTitle) {
 
 export function fetchRemoveBoard(boardId) {
   return (dispatch) => {
-    if (db.isAuthenticate(dispatch)) {
+    if (db.isAuthenticated(dispatch)) {
       db.removeBoard(boardId)
-      dispatch(removeBoard(boardId))
-      dispatch(push('/boards'))
 
       .catch(() => {
         dispatch(replace('/login'))
         db.removeToken()
       })
+      
+      dispatch(removeBoard(boardId))
+      dispatch(push('/boards'))
+
     }
   }
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 import BoardTile from './boardTile'
-import { v4 as uuid4 } from 'uuid'
 import { connect } from 'react-redux'
 import { fetchBoards } from '../actions/boards'
 import { fetchAddBoard } from '../actions/boards'
@@ -36,7 +35,7 @@ class Boards extends React.Component {
 
               {
                 this.props.boards.map(board => (
-                    <BoardTile key={uuid4()} board={board}/>
+                    <BoardTile key={board.id} board={board}/>
                 ))
               }
 

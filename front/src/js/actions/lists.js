@@ -36,7 +36,7 @@ export function renameList(title, listId) {
 
 export function fetchAddList(title, boardId) {
   return (dispatch) => {
-    if (db.isAuthenticate(dispatch)) {
+    if (db.isAuthenticated(dispatch)) {
       db.addList(title, boardId)
       .then(list => {
         dispatch(addList(list))
@@ -52,28 +52,30 @@ export function fetchAddList(title, boardId) {
 
 export function fetchRemoveList(listId) {
   return (dispatch) => {
-    if (db.isAuthenticate(dispatch)) {
+    if (db.isAuthenticated(dispatch)) {
       db.removeList(listId)
-      dispatch(removeList(listId))
 
       .catch(() => {
         dispatch(replace('/login'))
         db.removeToken()
       })
+
+      dispatch(removeList(listId))
     }
   }
 }
 
 export function fetchRenameList(title, listId) {
   return (dispatch) => {
-    if (db.isAuthenticate(dispatch)) {
+    if (db.isAuthenticated(dispatch)) {
       db.renameList(title, listId)
-      dispatch(renameList(title, listId))
 
       .catch(() => {
         dispatch(replace('/login'))
         db.removeToken()
       })
+
+      dispatch(renameList(title, listId))
     }
   }
 }

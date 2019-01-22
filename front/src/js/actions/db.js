@@ -43,7 +43,7 @@ class DB {
     }
   }
 
-  isAuthenticate(dispatch) {
+  isAuthenticated(dispatch) {
     if (this._getToken()) {
       return true
     } else {

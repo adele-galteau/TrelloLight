@@ -50,7 +50,7 @@ export function migrateCard(card, homeListId, targetListId) {
 
 export function fetchAddCard(content, listId) {
   return (dispatch) => {
-    if (db.isAuthenticate(dispatch)) {
+    if (db.isAuthenticated(dispatch)) {
       db.addCard(content, listId)
         .then(card => {
           dispatch(addCard(card, listId))
@@ -66,35 +66,37 @@ export function fetchAddCard(content, listId) {
 
 export function fetchRemoveCard(cardId, listId) {
   return (dispatch) => {
-    if (db.isAuthenticate(dispatch)) {
+    if (db.isAuthenticated(dispatch)) {
       db.removeCard(cardId)
-      dispatch(removeCard(cardId, listId))
 
       .catch(() => {
         dispatch(replace('/login'))
         db.removeToken()
       })
+
+      dispatch(removeCard(cardId, listId))
     }
   }
 }
 
 export function fetchRenameCard(content, cardId, listId) {
   return (dispatch) => {
-    if (db.isAuthenticate(dispatch)) {
+    if (db.isAuthenticated(dispatch)) {
       db.renameCard(content, cardId)
-      dispatch(renameCard(content, cardId, listId))
 
       .catch(() => {
         dispatch(replace('/login'))
         db.removeToken()
       })
+
+      dispatch(renameCard(content, cardId, listId))
     }
   }
 }
 
 export function fetchMigrateCard(cardId, homeListId, targetListId) {
   return (dispatch) => {
-    if (db.isAuthenticate(dispatch)) {
+    if (db.isAuthenticated(dispatch)) {
       db.migrateCard(cardId, targetListId)
       .then(card => {
         dispatch(migrateCard(card, homeListId, targetListId))

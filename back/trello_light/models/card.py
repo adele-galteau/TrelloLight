@@ -1,4 +1,4 @@
-from trello_light import db, ma
+from trello_light import db
 
 class Card(db.Model):
     __tablename__ = 'card'
@@ -6,11 +6,3 @@ class Card(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     list_id = db.Column(db.Integer, db.ForeignKey('list.id'))
     content = db.Column(db.String(80))
-
-class CardSchema(ma.ModelSchema):
-    class Meta:
-        model = Card
-        fields = ('content', 'id')
-
-card_schema = CardSchema()
-cards_schema = CardSchema(many=True)

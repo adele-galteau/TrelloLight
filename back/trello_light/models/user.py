@@ -1,4 +1,4 @@
-from trello_light import db, ma
+from trello_light import db
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -8,10 +8,3 @@ class User(db.Model):
     password = db.Column(db.String(80))
     token = db.relationship('Token', backref='user', lazy=True)
     boards = db.relationship('Board', backref='user', lazy=True, cascade='all, delete-orphan')
-
-class UserSchema(ma.ModelSchema):
-    class Meta:
-        model = User
-
-user_schema = UserSchema()
-users_schema = UserSchema(many=True)

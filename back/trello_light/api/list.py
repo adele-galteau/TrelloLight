@@ -1,5 +1,6 @@
-from trello_light.models import List, list_schema, lists_schema, Board
+from trello_light.models import List, Board
 from trello_light import app, db
+from trello_light.schemas import list_schema, lists_schema
 from .token import auth
 from flask import jsonify, request, g
 

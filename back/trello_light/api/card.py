@@ -5,36 +5,41 @@ from .token import auth
 from flask import jsonify, request, g
 
 
-@app.route("/cards/<list_id>", methods=["GET"])
+@app.route("/cards", methods=["GET"])
 @auth
-def get_cards(list_id):
+def get_cards():
+    list_id = request.args.get("list_id")
+    print("------------------>", list_id)
+
     list = List.query.filter_by(id=list_id).first()
 
     if not list:
-        return "No list for this id", 404
+        return "No such list for this id.", 404
 
     board = Board.query.filter_by(user_id=g.user, id=list.board_id).first()
 
     if not board:
-        return "No such list for this board or wrong authentication", 401
+        return "No such list for this board or wrong authentication.", 404
 
     cards = Card.query.filter_by(list_id=list.id).all()
 
     return cards_schema.jsonify(cards)
 
 
-@app.route("/card/<list_id>", methods=["POST"])
+@app.route("/card", methods=["POST"])
 @auth
-def create_card(list_id):
+def create_card():
+    list_id = request.args.get("list_id")
+
     list = List.query.filter_by(id=list_id).first()
 
     if not list:
-        return "No list for this id", 404
+        return "No such list for this id.", 404
 
     board = Board.query.filter_by(user_id=g.user, id=list.board_id).first()
 
     if not board:
-        return "No such list for this board or wrong authentication", 401
+        return "No such list for this board or wrong authentication.", 404
 
     result = card_schema.load(request.json)
 
@@ -56,17 +61,17 @@ def modify_card_content(card_id):
     card = Card.query.filter_by(id=card_id).first()
 
     if not card:
-        return "No card for this id", 404
+        return "No such card for this id.", 404
 
     list = List.query.filter_by(id=card.list_id).first()
 
     if not list:
-        return "No such card for this list or wrong authentication", 401
+        return "No such card for this list or wrong authentication.", 404
 
     board = Board.query.filter_by(user_id=g.user, id=list.board_id).first()
 
     if not board:
-        return "No such list for this board or wrong authentication", 401
+        return "No such list for this board or wrong authentication", 404
 
     result = card_schema.load(request.json)
 
@@ -87,17 +92,17 @@ def delete_card(card_id):
     card = Card.query.filter_by(id=card_id).first()
 
     if not card:
-        return "No card for this id", 404
+        return "No such card for this id.", 404
 
     list = List.query.filter_by(id=card.list_id).first()
 
     if not list:
-        return "No such card for this list or wrong authentication", 401
+        return "No such card for this list or wrong authentication.", 404
 
     board = Board.query.filter_by(user_id=g.user, id=list.board_id).first()
 
     if not board:
-        return "No such list for this board or wrong authentication", 401
+        return "No such list for this board or wrong authentication.", 404
 
     db.session.delete(card)
     db.session.commit()
@@ -105,9 +110,12 @@ def delete_card(card_id):
     return card_schema.jsonify(card)
 
 
-@app.route("/card/<card_id>/<target_listId>", methods=["PUT"])
+@app.route("/card", methods=["PUT"])
 @auth
-def migrate_card(card_id, target_listId):
+def migrate_card():
+    card_id = request.args.get("card_id")
+    target_listId = request.args.get("target_listId")
+
     card = Card.query.filter_by(id=card_id).first()
 
     if not card:
@@ -115,11 +123,15 @@ def migrate_card(card_id, target_listId):
 
     home_list = List.query.filter_by(id=card.list_id).first()
 
-    if not list:
-        return "No such card for this list or wrong authentication", 401
+    if not home_list:
+        return "No such card for this list or wrong authentication", 404
+
+    board = Board.query.filter_by(id=home_list.board_id).first()
+
+    if not board:
+        return "No such list for this board or wrong authentication.", 404
 
     target_list = List.query.filter_by(id=target_listId, board_id=home_list.board_id).first()
-
 
     if not target_list:
         return "No target list for this id or board", 404

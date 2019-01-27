@@ -75,7 +75,7 @@ def delete_list(list_id):
     list = List.query.filter_by(id=list_id).first()
 
     if not list:
-        return "No such list for this id or user." 404
+        return "No such list for this id or user.", 404
 
     board = Board.query.filter_by(user_id=g.user, id=list.board_id).first()
 

@@ -93,7 +93,7 @@ class List extends React.Component {
                 {...provided.droppableProps}
 
                 style={{height:
-                  this.list.cards.length == 0 ?
+                  this.props.cards.length == 0 ?
                   snapshot.isDraggingOver ? "40px" : "5px"
                   :
                   ""
@@ -101,7 +101,7 @@ class List extends React.Component {
               >
 
               {
-                this.list.cards.map((card, index) => (
+                this.props.cards.map((card, index) => (
                   <Card key={card.id} card={card} listId={this.list.id} index={index}/>
                 ))
               }

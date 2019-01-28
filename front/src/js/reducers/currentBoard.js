@@ -1,118 +1,21 @@
-import { RECEIVE_BOARD, RENAME_BOARD } from '../actions/board'
-import { ADD_LIST, REMOVE_LIST, RENAME_LIST } from '../actions/lists'
-import { ADD_CARD, REMOVE_CARD, RENAME_CARD, MIGRATE_CARD } from '../actions/cards'
+import { RECEIVE_BOARD_DATA, RENAME_BOARD } from '../actions/actionTypes'
 
 const initialState = {
-  title: "",
-  lists : []
+  title: ""
 }
 
 export const currentBoard = (state = initialState, action) => {
   switch (action.type) {
-    case RECEIVE_BOARD:
+    case RECEIVE_BOARD_DATA:
       return {
-        title: action.payload.board.title,
-        lists: action.payload.board.lists
+        title: action.payload.board.title
       }
 
     case RENAME_BOARD:
       return {
-        title: action.payload.title,
-        lists: state.lists
+        title: action.payload.title
       }
-
-    case ADD_LIST:
-      return {
-        title: state.title,
-        lists: [
-          ...state.lists,
-          action.payload.list
-        ]
-      }
-
-    case REMOVE_LIST:
-      return {
-        title: state.title,
-        lists: state.lists.filter(list => list.id != action.payload.listId)
-      }
-
-    case RENAME_LIST:
-      return {
-        title: state.title,
-        lists: state.lists.map(list => {
-          if (list.id == action.payload.listId) {
-            list.title = action.payload.title
-          }
-          return list
-        })
-      }
-
-      case ADD_CARD:
-        return {
-          title: state.title,
-          lists:
-            state.lists.map(list => {
-              if (list.id == action.payload.listId) {
-                list.cards = [
-                  ...list.cards,
-                  action.payload.card
-                ]
-              }
-              return list
-            })
-        }
-
-      case REMOVE_CARD:
-        return {
-          title: state.title,
-          lists:
-            state.lists.map(list => {
-              if (list.id == action.payload.listId) {
-                list.cards = list.cards.filter(card => card.id != action.payload.cardId)
-              }
-              return list
-          })
-        }
-
-      case RENAME_CARD:
-        return {
-          title: state.title,
-          lists:
-            state.lists.map(list => {
-              if (list.id == action.payload.listId) {
-                list.cards.map(card => {
-                  if (card.id == action.payload.cardId) {
-                    card.content = action.payload.content
-                  }
-                  return card
-                })
-              }
-              return list
-            })
-        }
-
-      case MIGRATE_CARD:
-        return {
-          title: state.title,
-          lists:
-            state.lists.map(list => {
-              if (list.id == action.payload.homeListId) {
-                list.cards = list.cards.filter(card => card.id != action.payload.card.id)
-              }
-              return list
-            })
-            .map(list => {
-              if (list.id == action.payload.targetListId) {
-                list.cards = [
-                  ...list.cards,
-                  action.payload.card
-                ]
-              }
-              return list
-            })
-        }
-
-
+      
     default:
       return state
   }

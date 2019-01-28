@@ -1,50 +1,18 @@
-import { db } from './db'
+import { api } from './api'
 import { replace } from 'connected-react-router'
-
-export const ADD_LIST = "ADD_LIST"
-export const REMOVE_LIST = "REMOVE_LIST"
-export const RENAME_LIST = "RENAME_LIST"
-
-export function addList(list) {
-  return {
-    type: ADD_LIST,
-    payload: {
-      list
-    }
-  }
-}
-
-export function removeList(listId) {
-  return {
-    type: REMOVE_LIST,
-    payload: {
-      listId
-    }
-  }
-}
-
-export function renameList(title, listId) {
-  return {
-    type: RENAME_LIST,
-    payload: {
-      title,
-      listId
-    }
-  }
-}
-
+import * as action from './actionCreators'
 
 export function fetchAddList(title, boardId) {
   return (dispatch) => {
-    if (db.isAuthenticated(dispatch)) {
-      db.addList(title, boardId)
+    if (api.isAuthenticated(dispatch)) {
+      api.addList(title, boardId)
       .then(list => {
-        dispatch(addList(list))
+        dispatch(action.addList(list))
       })
 
       .catch(() => {
         dispatch(replace('/login'))
-        db.removeToken()
+        api.removeToken()
       })
     }
   }
@@ -52,30 +20,30 @@ export function fetchAddList(title, boardId) {
 
 export function fetchRemoveList(listId) {
   return (dispatch) => {
-    if (db.isAuthenticated(dispatch)) {
-      db.removeList(listId)
+    if (api.isAuthenticated(dispatch)) {
+      api.removeList(listId)
 
       .catch(() => {
         dispatch(replace('/login'))
-        db.removeToken()
+        api.removeToken()
       })
 
-      dispatch(removeList(listId))
+      dispatch(action.removeList(listId))
     }
   }
 }
 
 export function fetchRenameList(title, listId) {
   return (dispatch) => {
-    if (db.isAuthenticated(dispatch)) {
-      db.renameList(title, listId)
+    if (api.isAuthenticated(dispatch)) {
+      api.renameList(title, listId)
 
       .catch(() => {
         dispatch(replace('/login'))
-        db.removeToken()
+        api.removeToken()
       })
 
-      dispatch(renameList(title, listId))
+      dispatch(action.renameList(title, listId))
     }
   }
 }

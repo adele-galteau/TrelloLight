@@ -8,20 +8,21 @@ from flask import jsonify, request, g
 @app.route("/cards", methods=["GET"])
 @auth
 def get_cards():
-    list_id = request.args.get("list_id")
-    print("------------------>", list_id)
+    board_id = request.args.get("board_id")
 
-    list = List.query.filter_by(id=list_id).first()
-
-    if not list:
-        return "No such list for this id.", 404
-
-    board = Board.query.filter_by(user_id=g.user, id=list.board_id).first()
+    board = Board.query.filter_by(user_id=g.user, id=board_id).first()
 
     if not board:
-        return "No such list for this board or wrong authentication.", 404
+        return "No such board for this id or wrong authentication.", 404
 
-    cards = Card.query.filter_by(list_id=list.id).all()
+    lists = List.query.filter_by(board_id=board.id).all()
+
+    lists_ids = []
+
+    for list in lists:
+        lists_ids.append(list.id)
+
+    cards = Card.query.filter(Card.list_id.in_(lists_ids)).all()
 
     return cards_schema.jsonify(cards)
 

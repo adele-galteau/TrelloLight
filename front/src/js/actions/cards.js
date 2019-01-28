@@ -1,64 +1,18 @@
-import { db } from './db'
+import { api } from './api'
 import { replace } from 'connected-react-router'
-
-export const ADD_CARD = "ADD_CARD"
-export const REMOVE_CARD = "REMOVE_CARD"
-export const RENAME_CARD = "RENAME_CARD"
-export const MIGRATE_CARD = "MIGRATE_CARD"
-
-export function addCard(card, listId) {
-  return {
-    type: ADD_CARD,
-    payload: {
-      card,
-      listId
-    }
-  }
-}
-
-export function removeCard(cardId, listId) {
-  return {
-    type: REMOVE_CARD,
-    payload: {
-      cardId,
-      listId
-    }
-  }
-}
-
-export function renameCard(content, cardId, listId) {
-  return {
-    type: RENAME_CARD,
-    payload: {
-      content,
-      cardId,
-      listId
-    }
-  }
-}
-
-export function migrateCard(card, homeListId, targetListId) {
-  return {
-    type: MIGRATE_CARD,
-    payload: {
-      card,
-      homeListId,
-      targetListId
-    }
-  }
-}
+import * as action from './actionCreators'
 
 export function fetchAddCard(content, listId) {
   return (dispatch) => {
-    if (db.isAuthenticated(dispatch)) {
-      db.addCard(content, listId)
+    if (api.isAuthenticated(dispatch)) {
+      api.addCard(content, listId)
         .then(card => {
-          dispatch(addCard(card, listId))
+          dispatch(action.addCard(card, listId))
         })
 
         .catch(() => {
           dispatch(replace('/login'))
-          db.removeToken()
+          api.removeToken()
         })
     }
   }
@@ -66,45 +20,46 @@ export function fetchAddCard(content, listId) {
 
 export function fetchRemoveCard(cardId, listId) {
   return (dispatch) => {
-    if (db.isAuthenticated(dispatch)) {
-      db.removeCard(cardId)
+    if (api.isAuthenticated(dispatch)) {
+      api.removeCard(cardId)
 
       .catch(() => {
         dispatch(replace('/login'))
-        db.removeToken()
+        api.removeToken()
       })
 
-      dispatch(removeCard(cardId, listId))
+      dispatch(action.removeCard(cardId, listId))
     }
   }
 }
 
 export function fetchRenameCard(content, cardId, listId) {
   return (dispatch) => {
-    if (db.isAuthenticated(dispatch)) {
-      db.renameCard(content, cardId)
+    if (api.isAuthenticated(dispatch)) {
+      api.renameCard(content, cardId)
 
       .catch(() => {
         dispatch(replace('/login'))
-        db.removeToken()
+        api.removeToken()
       })
 
-      dispatch(renameCard(content, cardId, listId))
+      dispatch(action.renameCard(content, cardId, listId))
     }
   }
 }
 
-export function fetchMigrateCard(cardId, homeListId, targetListId) {
+export function fetchMigrateCard(cardId, targetListId) {
   return (dispatch) => {
-    if (db.isAuthenticated(dispatch)) {
-      db.migrateCard(cardId, targetListId)
-      .then(card => {
-        dispatch(migrateCard(card, homeListId, targetListId))
-      })
+    if (api.isAuthenticated(dispatch)) {
+      dispatch(action.migrateCard(cardId, targetListId))
+
+      api.migrateCard(cardId, targetListId)
+
+
 
       .catch(() => {
         dispatch(replace('/login'))
-        db.removeToken()
+        api.removeToken()
       })
     }
   }

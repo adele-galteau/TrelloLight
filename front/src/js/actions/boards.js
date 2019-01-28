@@ -1,48 +1,18 @@
 import { push, replace } from 'connected-react-router'
-import { db } from './db'
-
-export const RECEIVE_BOARDS = "RECEIVE_BOARDS"
-export const ADD_BOARD = 'ADD_BOARD'
-export const REMOVE_BOARD = 'REMOVE_BOARD'
-
-export function receiveBoards(boards) {
-  return {
-    type: RECEIVE_BOARDS,
-    payload: {
-      boards
-    }
-  }
-}
-
-export function addBoard(board) {
-  return {
-    type: ADD_BOARD,
-    payload: {
-      board
-    }
-  }
-}
-
-export function removeBoard(boardId) {
-  return {
-    type: REMOVE_BOARD,
-    payload: {
-      boardId
-    }
-  }
-}
+import { api } from './api'
+import * as action from './actionCreators'
 
 export function fetchBoards() {
   return (dispatch) => {
-    if (db.isAuthenticated(dispatch)) {
-      db.fetchBoards()
+    if (api.isAuthenticated(dispatch)) {
+      api.fetchBoards()
         .then(boards => {
-          dispatch(receiveBoards(boards))
+          dispatch(action.receiveBoards(boards))
         })
 
         .catch(() => {
           dispatch(replace('/login'))
-          db.removeToken()
+          api.removeToken()
         })
     }
   }
@@ -50,14 +20,14 @@ export function fetchBoards() {
 
 export function fetchAddBoard(boardTitle) {
   return (dispatch) => {
-    if (db.isAuthenticated(dispatch)) {
-      db.addBoard(boardTitle)
+    if (api.isAuthenticated(dispatch)) {
+      api.addBoard(boardTitle)
         .then(board => {
-          dispatch(addBoard(board))
+          dispatch(action.addBoard(board))
         })
         .catch(() => {
           dispatch(replace('/login'))
-          db.removeToken()
+          api.removeToken()
         })
     }
   }
@@ -65,16 +35,53 @@ export function fetchAddBoard(boardTitle) {
 
 export function fetchRemoveBoard(boardId) {
   return (dispatch) => {
-    if (db.isAuthenticated(dispatch)) {
-      db.removeBoard(boardId)
+    if (api.isAuthenticated(dispatch)) {
+      api.removeBoard(boardId)
 
       .catch(() => {
         dispatch(replace('/login'))
-        db.removeToken()
+        api.removeToken()
       })
-      
-      dispatch(removeBoard(boardId))
+
+      dispatch(action.removeBoard(boardId))
       dispatch(push('/boards'))
+
+    }
+  }
+}
+
+
+export function fetchBoard(boardId) {
+  return (dispatch) => {
+    if (api.isAuthenticated(dispatch)) {
+      api.fetchBoard(boardId)
+        .then(board => {
+          dispatch(action.receiveBoard(board))
+        })
+      api.fetchCards(boardId)
+        .then(cards => {
+          dispatch(action.receiveCards(cards))
+        })
+
+        .catch(() => {
+          dispatch(replace('/login'))
+          api.removeToken()
+        })
+    }
+  }
+}
+
+export function fetchRenameBoard(title, boardId) {
+  return (dispatch) => {
+    if (api.isAuthenticated(dispatch)) {
+      api.renameBoard(title, boardId)
+
+      .catch(() => {
+        dispatch(replace('/login'))
+        api.removeToken()
+      })
+
+      dispatch(action.renameBoard(title, boardId))
 
     }
   }

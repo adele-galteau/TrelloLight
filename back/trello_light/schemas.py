@@ -6,7 +6,6 @@ from marshmallow import fields
 class CardSchema(ma.ModelSchema):
     class Meta:
         model = Card
-        fields = ('content', 'id')
 
 class ListSchema(ma.ModelSchema):
     class Meta:
@@ -15,8 +14,7 @@ class ListSchema(ma.ModelSchema):
 class ListsSchema(ma.ModelSchema):
     class Meta:
         model = List
-        fields = ("id", "title", "cards")
-    cards = fields.Nested(CardSchema, many=True)
+        fields = ("id", "title")
 
 class NestedBoardSchema(ma.ModelSchema):
     class Meta:
@@ -39,7 +37,7 @@ class UserSchema(ma.ModelSchema):
     class Meta:
         model = User
 
-        
+
 card_schema = CardSchema()
 cards_schema = CardSchema(many=True)
 list_schema = ListSchema()

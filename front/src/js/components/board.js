@@ -2,7 +2,7 @@ import React from 'react'
 import List from './list'
 import { DragDropContext } from 'react-beautiful-dnd'
 import { connect } from 'react-redux'
-import { fetchBoard, fetchRenameBoard } from '../actions/board'
+import { fetchBoard, fetchRenameBoard } from '../actions/boards'
 import { fetchRemoveBoard } from '../actions/boards'
 import { fetchAddList } from '../actions/lists'
 import { fetchMigrateCard } from '../actions/cards'
@@ -67,7 +67,7 @@ class Board extends React.Component {
   }
 
   onDragEnd(result) {
-    this.props.migrateCard(result.draggableId, result.source.droppableId, result.destination.droppableId)
+    this.props.migrateCard(result.draggableId, result.destination.droppableId)
   }
 
   componentDidMount() {
@@ -107,7 +107,11 @@ class Board extends React.Component {
             <DragDropContext onDragEnd={this.onDragEnd}>
               {
                 this.props.lists.map(list => (
-                  <List key={list.id} list={list}/>
+                  <List
+                    key={list.id}
+                    list={list}
+                    cards={this.props.cards.filter(card => card.List == list.id)}
+                  />
                 ))
               }
             </DragDropContext>
@@ -127,7 +131,8 @@ class Board extends React.Component {
 const mapStateToProps = state => {
   return {
     title: state.currentBoard.title,
-    lists: state.currentBoard.lists
+    lists: state.currentLists,
+    cards: state.currentCards
   }
 }
 

@@ -1,10 +1,10 @@
-import { db } from './db'
+import { api } from './api'
 import { replace } from 'connected-react-router'
 
 export function logout() {
   return (dispatch) => {
-    if (db.isAuthenticated(dispatch)) {
-      db.logout()
+    if (api.isAuthenticated(dispatch)) {
+      api.logout()
       dispatch(replace('/login'))
     }
   }

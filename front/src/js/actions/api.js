@@ -1,7 +1,7 @@
 import 'whatwg-fetch'
 import { push, replace } from 'connected-react-router'
 
-class DB {
+class API {
   constructor() {
     this.url = 'http://localhost:5000'
     this.contentType = { 'Content-Type': 'application/json'}
@@ -155,7 +155,7 @@ class DB {
 
   addList(title, boardId) {
     return fetch(
-      this.url + '/list/' + boardId,
+      this.url + '/list?board_id=' + boardId,
       {
         method: "POST",
         headers: this._headers(),
@@ -197,9 +197,25 @@ class DB {
       .then(this._json)
   }
 
+  fetchCards(board_id) {
+    return fetch(
+      this.url + '/cards?board_id=' + board_id,
+      {
+        method: "GET",
+        headers: this._headers()
+      }
+    )
+      .then(this._status)
+      .then(this._json)
+      .then(cards => {
+        console.log(cards)
+        return cards
+      })
+  }
+
   addCard(content, listId) {
     return fetch(
-      this.url + '/card/'+ listId,
+      this.url + '/card?list_id='+ listId,
       {
         method: "POST",
         headers: this._headers(),
@@ -244,7 +260,7 @@ class DB {
 
   migrateCard(cardId, targetListId) {
     return fetch(
-      this.url + '/card/' + cardId + "/" + targetListId,
+      this.url + '/card?card_id=' + cardId + "&&target_listId=" + targetListId,
       {
         method: "PUT",
         headers: this._headers(),
@@ -259,4 +275,4 @@ class DB {
   }
 }
 
-export const db = new DB()
+export const api = new API()

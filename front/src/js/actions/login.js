@@ -1,9 +1,8 @@
-import { db } from './db.js'
+import { api } from './api.js'
 import { push } from 'connected-react-router'
-
 
 export function login(username, password) {
   return (dispatch) => {
-    db.authenticate(username, password, dispatch)
+    api.authenticate(username, password, dispatch)
   }
 }

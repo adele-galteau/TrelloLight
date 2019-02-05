@@ -1,5 +1,4 @@
 import 'whatwg-fetch'
-import { push, replace } from 'connected-react-router'
 
 class API {
   constructor() {
@@ -43,15 +42,7 @@ class API {
     }
   }
 
-  isAuthenticated(dispatch) {
-    if (this._getToken()) {
-      return true
-    } else {
-      dispatch(replace('/login'))
-    }
-  }
-
-  authenticate(username, password, dispatch) {
+  login(username, password) {
     return fetch(
       this.url + "/login",
       {
@@ -64,7 +55,6 @@ class API {
       .then(this._json)
       .then(resp => {
         this._setToken(resp.token)
-        dispatch(push('/boards'))
       })
   }
 

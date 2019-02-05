@@ -3,8 +3,8 @@ import Card from './card'
 import { Droppable } from 'react-beautiful-dnd'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
-import { fetchRemoveList, fetchRenameList } from '../actions/lists'
-import { fetchAddCard } from '../actions/cards'
+import { removeList, renameList } from '../actions/lists'
+import { addCard } from '../actions/cards'
 
 class List extends React.Component {
   constructor(props) {
@@ -121,9 +121,9 @@ class List extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    removeList: (listId) => {dispatch(fetchRemoveList(listId))},
-    renameList: (title, listId) => {dispatch(fetchRenameList(title, listId))},
-    addCard: (content, listId) => {dispatch(fetchAddCard(content, listId))}
+    removeList: (listId) => {dispatch(removeList(listId))},
+    renameList: (title, listId) => {dispatch(renameList(title, listId))},
+    addCard: (content, listId) => {dispatch(addCard(content, listId))}
   }
 }
 export default withRouter(connect(null, mapDispatchToProps)(List))

@@ -35,6 +35,7 @@ class Login extends React.Component {
 
 
   render() {
+    console.log(localStorage.getItem("token"))
     return (
       <div style={{maxWidth: "350px"}} className="container-fluid">
         <div className="row">

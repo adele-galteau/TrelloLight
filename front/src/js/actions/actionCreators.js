@@ -29,7 +29,7 @@ export function removeBoard(boardId) {
 
 export function receiveBoard(board) {
   return {
-    type: types.RECEIVE_BOARD_DATA,
+    type: types.RECEIVE_BOARD,
     payload: {
       board
     }

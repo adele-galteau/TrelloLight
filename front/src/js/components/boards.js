@@ -1,8 +1,8 @@
 import React from 'react'
 import BoardTile from './boardTile'
 import { connect } from 'react-redux'
-import { fetchBoards } from '../actions/boards'
-import { fetchAddBoard } from '../actions/boards'
+import { getBoards } from '../actions/boards'
+import { addBoard } from '../actions/boards'
 
 class Boards extends React.Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class Boards extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchBoards()
+    this.props.getBoards()
   }
 
   addBoard() {
@@ -63,8 +63,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchBoards: () => {dispatch(fetchBoards())},
-    addBoard: (boardTitle) => {dispatch(fetchAddBoard(boardTitle))}
+    getBoards: () => {dispatch(getBoards())},
+    addBoard: (boardTitle) => {dispatch(addBoard(boardTitle))}
   }
 }
 

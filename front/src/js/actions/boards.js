@@ -2,9 +2,8 @@ import { push, replace } from 'connected-react-router'
 import { api } from './api'
 import * as action from './actionCreators'
 
-export function fetchBoards() {
+export function getBoards() {
   return (dispatch) => {
-    if (api.isAuthenticated(dispatch)) {
       api.fetchBoards()
         .then(boards => {
           dispatch(action.receiveBoards(boards))
@@ -14,13 +13,11 @@ export function fetchBoards() {
           dispatch(replace('/login'))
           api.removeToken()
         })
-    }
   }
 }
 
-export function fetchAddBoard(boardTitle) {
+export function addBoard(boardTitle) {
   return (dispatch) => {
-    if (api.isAuthenticated(dispatch)) {
       api.addBoard(boardTitle)
         .then(board => {
           dispatch(action.addBoard(board))
@@ -29,13 +26,11 @@ export function fetchAddBoard(boardTitle) {
           dispatch(replace('/login'))
           api.removeToken()
         })
-    }
   }
 }
 
-export function fetchRemoveBoard(boardId) {
+export function removeBoard(boardId) {
   return (dispatch) => {
-    if (api.isAuthenticated(dispatch)) {
       api.removeBoard(boardId)
 
       .catch(() => {
@@ -45,15 +40,12 @@ export function fetchRemoveBoard(boardId) {
 
       dispatch(action.removeBoard(boardId))
       dispatch(push('/boards'))
-
-    }
   }
 }
 
 
-export function fetchBoard(boardId) {
+export function getBoard(boardId) {
   return (dispatch) => {
-    if (api.isAuthenticated(dispatch)) {
       api.fetchBoard(boardId)
         .then(board => {
           dispatch(action.receiveBoard(board))
@@ -67,13 +59,11 @@ export function fetchBoard(boardId) {
           dispatch(replace('/login'))
           api.removeToken()
         })
-    }
   }
 }
 
-export function fetchRenameBoard(title, boardId) {
+export function renameBoard(title, boardId) {
   return (dispatch) => {
-    if (api.isAuthenticated(dispatch)) {
       api.renameBoard(title, boardId)
 
       .catch(() => {
@@ -82,7 +72,5 @@ export function fetchRenameBoard(title, boardId) {
       })
 
       dispatch(action.renameBoard(title, boardId))
-
-    }
   }
 }

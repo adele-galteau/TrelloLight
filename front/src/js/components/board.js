@@ -2,10 +2,9 @@ import React from 'react'
 import List from './list'
 import { DragDropContext } from 'react-beautiful-dnd'
 import { connect } from 'react-redux'
-import { fetchBoard, fetchRenameBoard } from '../actions/boards'
-import { fetchRemoveBoard } from '../actions/boards'
-import { fetchAddList } from '../actions/lists'
-import { fetchMigrateCard } from '../actions/cards'
+import { getBoard, renameBoard, removeBoard } from '../actions/boards'
+import { addList } from '../actions/lists'
+import { migrateCard } from '../actions/cards'
 
 class Board extends React.Component {
   constructor(props) {
@@ -71,7 +70,7 @@ class Board extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchBoard(this.boardId)
+    this.props.getBoard(this.boardId)
   }
 
   render() {
@@ -138,11 +137,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchBoard: (boardId) => (dispatch(fetchBoard(boardId))),
-    removeBoard: (boardId) => (dispatch(fetchRemoveBoard(boardId))),
-    renameBoard: (title, boardId) => (dispatch(fetchRenameBoard(title, boardId))),
-    addList: (title, boardId) => {dispatch(fetchAddList(title, boardId))},
-    migrateCard: (cardId, homeListId, targetListId) => {dispatch(fetchMigrateCard(cardId, homeListId, targetListId))}
+    getBoard: (boardId) => (dispatch(getBoard(boardId))),
+    removeBoard: (boardId) => (dispatch(removeBoard(boardId))),
+    renameBoard: (title, boardId) => (dispatch(renameBoard(title, boardId))),
+    addList: (title, boardId) => {dispatch(addList(title, boardId))},
+    migrateCard: (cardId, targetListId) => {dispatch(migrateCard(cardId, targetListId))}
   }
 }
 

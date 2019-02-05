@@ -2,7 +2,7 @@ import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import { v4 as uuid } from 'uuid'
 import { connect } from 'react-redux'
-import { fetchRemoveCard, fetchRenameCard, fetchMigrateCard } from '../actions/cards'
+import { removeCard, renameCard } from '../actions/cards'
 
 class Card extends React.Component {
   constructor(props) {
@@ -18,7 +18,6 @@ class Card extends React.Component {
     this.listId = this.props.listId
     this.removeCard = this.removeCard.bind(this)
     this.renameCard = this.renameCard.bind(this)
-    this.migrateCard = this.migrateCard.bind(this)
     this.showInput = this.showInput.bind(this)
     this.onChangeContent = this.onChangeContent.bind(this)
   }
@@ -53,9 +52,6 @@ class Card extends React.Component {
     }
   }
 
-  migrateCard() {
-    this.props.migrateCard(this.card.id, this.listId, 1)
-  }
 
   render() {
     return (
@@ -100,9 +96,8 @@ class Card extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    removeCard: (cardId, listId) => {dispatch(fetchRemoveCard(cardId, listId))},
-    renameCard: (content, cardId, listId) => {dispatch(fetchRenameCard(content, cardId, listId))},
-    migrateCard: (cardId, homeListId, targetListId) => {dispatch(fetchMigrateCard(cardId, homeListId, targetListId))}
+    removeCard: (cardId, listId) => {dispatch(removeCard(cardId, listId))},
+    renameCard: (content, cardId, listId) => {dispatch(renameCard(content, cardId, listId))}
   }
 }
 

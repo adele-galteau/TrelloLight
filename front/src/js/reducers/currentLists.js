@@ -1,10 +1,10 @@
-import { RECEIVE_BOARD_DATA, ADD_LIST, REMOVE_LIST, RENAME_LIST } from '../actions/actionTypes'
+import { RECEIVE_BOARD, ADD_LIST, REMOVE_LIST, RENAME_LIST } from '../actions/actionTypes'
 
 const initialState = []
 
 export const currentLists = (state = initialState, action) => {
   switch (action.type) {
-    case RECEIVE_BOARD_DATA:
+    case RECEIVE_BOARD:
       return action.payload.board.lists.map(list => {
           return {
             title: list.title,

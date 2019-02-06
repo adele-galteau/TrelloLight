@@ -86,6 +86,17 @@ export function renameCard(content, cardId, listId) {
   }
 }
 
+export function editDescription(description, cardId, listId) {
+  return {
+    type: types.EDIT_CARD_DESCRIPTION,
+    payload:{
+      description,
+      cardId,
+      listId
+    }
+  }
+}
+
 export function migrateCard(cardId, targetListId) {
   return {
     type: types.MIGRATE_CARD,

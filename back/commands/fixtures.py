@@ -20,10 +20,12 @@ datas = [
                         title = 'Backlog',
                         cards = [
                             Card(
-                                content = 'Install Webpack'
+                                content = 'Install Webpack',
+                                description = ""
                             ),
                             Card(
-                                content = 'Create components'
+                                content = 'Create components',
+                                description = ""
                             )
                         ]
                     ),
@@ -31,7 +33,8 @@ datas = [
                         title = 'Current',
                         cards = [
                             Card(
-                                content = 'Write models'
+                                content = 'Write models',
+                                description = ""
                             )
                         ]
                     ),
@@ -39,7 +42,8 @@ datas = [
                         title = 'Done',
                         cards = [
                             Card(
-                                content = 'Create Flask app'
+                                content = 'Create Flask app',
+                                description = ""
                             )
                         ]
                     )
@@ -64,10 +68,12 @@ datas = [
                         title = 'Backlog',
                         cards = [
                             Card(
-                                content = 'Fix pagination bug'
+                                content = 'Fix pagination bug',
+                                description = ""
                             ),
                             Card(
-                                content = 'Clean code'
+                                content = 'Clean code',
+                                description = ""
                             )
                         ]
                     ),
@@ -75,7 +81,8 @@ datas = [
                         title = 'Current',
                         cards = [
                             Card(
-                                content = 'Add total votes info'
+                                content = 'Add total votes info',
+                                description = ""
                             )
                         ]
                     ),
@@ -83,10 +90,12 @@ datas = [
                         title = 'Done',
                         cards = [
                             Card(
-                                content = 'Display two new cats onclick'
+                                content = 'Display two new cats onclick',
+                                description = ""
                             ),
                             Card(
-                                content = 'Upgrade vote onclick'
+                                content = 'Upgrade vote onclick',
+                                description = ""
                             )
                         ]
                     )

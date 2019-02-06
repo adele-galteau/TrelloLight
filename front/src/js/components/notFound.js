@@ -18,6 +18,7 @@ export default class NotFound extends React.Component {
 
       <div className='row justify-content-center'>
         <div className='col-md-6'>
+          <h3>The page you requested doesn't exists.</h3>
           <Link to='/boards'>
             <p className='text-center'>Back to Home</p>
           </Link>

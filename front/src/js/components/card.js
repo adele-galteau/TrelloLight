@@ -2,7 +2,7 @@ import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import { v4 as uuid } from 'uuid'
 import { connect } from 'react-redux'
-import { removeCard, renameCard } from '../actions/cards'
+import { removeCard, renameCard, editDescription } from '../actions/cards'
 
 class Card extends React.Component {
   constructor(props) {
@@ -10,7 +10,8 @@ class Card extends React.Component {
 
     this.state = {
       showInput: false,
-      content: ""
+      content: "",
+      description: ""
     }
 
     this.card = this.props.card
@@ -18,6 +19,7 @@ class Card extends React.Component {
     this.listId = this.props.listId
     this.removeCard = this.removeCard.bind(this)
     this.renameCard = this.renameCard.bind(this)
+    this.editDescription = this.editDescription.bind(this)
     this.showInput = this.showInput.bind(this)
     this.onChangeContent = this.onChangeContent.bind(this)
   }
@@ -34,9 +36,16 @@ class Card extends React.Component {
     })
   }
 
+  onChangeDescripton(e) {
+    this.setState({
+      description: e.target.value
+    })
+  }
+
   removeCard() {
     this.props.removeCard(this.card.id, this.listId)
   }
+
 
   renameCard(e) {
     if (e.keyCode == 13) {
@@ -51,6 +60,14 @@ class Card extends React.Component {
       }
     }
   }
+
+  editDescription() {
+    const description = window.prompt("", "")
+
+    if (description != null && description.trim()) {
+      this.props.editDescription(description, this.card.id, this.listId)
+    }
+  } 
 
 
   render() {
@@ -83,6 +100,10 @@ class Card extends React.Component {
                   </div>
                 </div>
 
+                <button onClick={this.editDescription}>
+                  description
+                </button>
+
               </div>
             </div>
 
@@ -97,7 +118,8 @@ class Card extends React.Component {
 const mapDispatchToProps = dispatch => {
   return {
     removeCard: (cardId, listId) => {dispatch(removeCard(cardId, listId))},
-    renameCard: (content, cardId, listId) => {dispatch(renameCard(content, cardId, listId))}
+    renameCard: (content, cardId, listId) => {dispatch(renameCard(content, cardId, listId))},
+    editDescription: (description, cardId, listId) => {dispatch(editDescription(description, cardId, listId))}
   }
 }
 

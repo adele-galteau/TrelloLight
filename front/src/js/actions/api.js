@@ -197,10 +197,6 @@ class API {
     )
       .then(this._status)
       .then(this._json)
-      .then(cards => {
-        console.log(cards)
-        return cards
-      })
   }
 
   addCard(content, listId) {
@@ -247,6 +243,24 @@ class API {
       .then(this._json)
   }
 
+  editDescription(description, cardId) {
+    return fetch(
+      this.url + '/card/' + cardId,
+      {
+        method: "PUT",
+        headers: this._headers(),
+        body: JSON.stringify({
+          "description": description
+        })
+      }
+    )
+      .then(this._status)
+      .then(this._json)
+      .then(resp => {
+        console.log(resp)
+        return resp
+      })
+  }
 
   migrateCard(cardId, targetListId) {
     return fetch(

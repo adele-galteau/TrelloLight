@@ -58,7 +58,7 @@ def create_card():
 
 @app.route("/card/<card_id>", methods=["PUT"])
 @auth
-def modify_card_content(card_id):
+def modify_card(card_id):
     card = Card.query.filter_by(id=card_id).first()
 
     if not card:
@@ -79,7 +79,16 @@ def modify_card_content(card_id):
     if len(result.errors) > 0:
         return jsonify(result.errors)
 
-    card.content = result.data.content
+    if result.data.content != None:
+        card.content = result.data.content
+    else:
+        card.content = card.content
+
+    if result.data.description != None:
+        card.description = result.data.description
+    else:
+        card.description = card.description
+    
 
     db.session.add(card)
     db.session.commit()

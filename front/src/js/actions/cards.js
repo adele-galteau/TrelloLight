@@ -42,6 +42,19 @@ export function renameCard(content, cardId, listId) {
   }
 }
 
+export function editDescription(description, cardId, listId) {
+  return (dispatch) => {
+    api.editDescription(description, cardId)
+
+    .catch(() => {
+      dispatch(push('/login'))
+      api.removeToken()
+    })
+
+    dispatch(action.editDescription(description, cardId, listId))
+  }
+}
+
 export function migrateCard(cardId, targetListId) {
   return (dispatch) => {
       dispatch(action.migrateCard(cardId, targetListId))

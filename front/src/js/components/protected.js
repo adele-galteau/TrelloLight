@@ -4,6 +4,7 @@ import Board from './board'
 import Boards from './boards'
 import Navbar from './navbar'
 import NotFound from './notFound'
+import InternalServerError from './internalServerError'
 
 export default class Protected extends React.Component {
     render() {
@@ -13,6 +14,7 @@ export default class Protected extends React.Component {
                 <Switch>
                     <Route path="/board/:boardId" component={Board}></Route>
                     <Route path="/boards" component={Boards}></Route>
+                    <Route path="/500" component={InternalServerError}></Route>
                     <Route path="/" component={NotFound}></Route>
                 </Switch>
             </React.Fragment>

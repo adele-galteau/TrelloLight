@@ -1,4 +1,4 @@
-import { RECEIVE_CARDS, ADD_CARD, REMOVE_CARD, RENAME_CARD, MIGRATE_CARD } from '../actions/actionTypes'
+import { RECEIVE_CARDS, ADD_CARD, REMOVE_CARD, RENAME_CARD, MIGRATE_CARD, EDIT_CARD_DESCRIPTION } from '../actions/actionTypes'
 
 const initialState = []
 
@@ -17,6 +17,14 @@ export const currentCards = (state = initialState, action) => {
       return state.map(card => {
         if (card.id == action.payload.cardId) {
           card.content = action.payload.content
+        }
+        return card
+      })
+
+    case EDIT_CARD_DESCRIPTION:
+      return state.map(card => {
+        if (card.id == action.payload.cardId) {
+          card.description = action.payload.description
         }
         return card
       })

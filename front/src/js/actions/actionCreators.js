@@ -110,7 +110,7 @@ export function migrateCard(cardId, targetListId) {
 export function showDetailedCard(card) {
   return {
     type: types.SHOW_DETAILED_CARD,
-    payloads: {
+    payload: {
       card
     }
   }

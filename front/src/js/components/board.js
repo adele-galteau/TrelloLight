@@ -124,7 +124,7 @@ class Board extends React.Component {
         </div>
 
         {
-          this.props.showDetailedCard == true ?
+          this.props.detailedCard.show == true ?
             <DetailedCard />
           :
            ""
@@ -140,7 +140,7 @@ const mapStateToProps = state => {
     title: state.currentBoard.title,
     lists: state.currentLists,
     cards: state.currentCards,
-    showDetailedCard: state.showDetailedCard
+    detailedCard: state.detailedCard
   }
 }
 

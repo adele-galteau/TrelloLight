@@ -4,7 +4,7 @@ import { boards } from './boards'
 import { currentBoard } from './currentBoard'
 import { currentLists } from './currentLists'
 import { currentCards } from './currentCards'
-import { showDetailedCard } from './showDetailedCard'
+import { detailedCard } from './detailedCard'
 
 export default(history) => combineReducers({
   router: connectRouter(history),
@@ -12,5 +12,5 @@ export default(history) => combineReducers({
   currentBoard,
   currentLists,
   currentCards, 
-  showDetailedCard
+  detailedCard
 })

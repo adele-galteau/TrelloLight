@@ -1,5 +1,6 @@
 import React from 'react'
 import List from './list'
+import DetailedCard from './detailedCard'
 import { DragDropContext } from 'react-beautiful-dnd'
 import { connect } from 'react-redux'
 import { getBoard, renameBoard, removeBoard } from '../actions/boards'
@@ -122,6 +123,13 @@ class Board extends React.Component {
           </div>
         </div>
 
+        {
+          this.props.showDetailedCard == true ?
+            <DetailedCard />
+          :
+           ""
+        }
+
       </React.Fragment>
     )
   }
@@ -131,7 +139,8 @@ const mapStateToProps = state => {
   return {
     title: state.currentBoard.title,
     lists: state.currentLists,
-    cards: state.currentCards
+    cards: state.currentCards,
+    showDetailedCard: state.showDetailedCard
   }
 }
 

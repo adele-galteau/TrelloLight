@@ -3,6 +3,7 @@ import { Draggable } from 'react-beautiful-dnd'
 import { v4 as uuid } from 'uuid'
 import { connect } from 'react-redux'
 import { removeCard, renameCard, editDescription } from '../actions/cards'
+import { showDetailedCard } from '../actions/actionCreators'
 
 class Card extends React.Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class Card extends React.Component {
     this.editDescription = this.editDescription.bind(this)
     this.showInput = this.showInput.bind(this)
     this.onChangeContent = this.onChangeContent.bind(this)
+    this.showDetailedCard = this.showDetailedCard.bind(this)
   }
 
   showInput() {
@@ -50,7 +52,8 @@ class Card extends React.Component {
   renameCard(e) {
     if (e.keyCode == 13) {
       this.setState({
-        showInput: false
+        showInput: false,
+        showDetailedCard: false
       })
 
       const content = this.state.content
@@ -69,6 +72,10 @@ class Card extends React.Component {
     }
   } 
 
+  showDetailedCard() {
+    this.props.showDetailedCard(this.card)
+  }
+
 
   render() {
     return (
@@ -81,7 +88,7 @@ class Card extends React.Component {
             {...provided.dragHandleProps}
           >
 
-            <div className="bg-light mx-1 mb-2" style={{borderRadius: "3px", boxShadow: "0 1px 0 rgba(9,45,66,.25)", padding: "6px 8px 6px"}}>
+            <div onClick={this.showDetailedCard} className="bg-light mx-1 mb-2" style={{borderRadius: "3px", boxShadow: "0 1px 0 rgba(9,45,66,.25)", padding: "6px 8px 6px"}}>
               <div className="d-flex justify-content-between">
 
                 {
@@ -99,11 +106,7 @@ class Card extends React.Component {
                     <a onClick={this.removeCard} className="dropdown-item" style={{color: "#17394d", cursor: "text", fontSize: "14px", cursor:"pointer"}}>Delete this card</a>
                   </div>
                 </div>
-
-                <button onClick={this.editDescription}>
-                  description
-                </button>
-
+                
               </div>
             </div>
 
@@ -119,7 +122,8 @@ const mapDispatchToProps = dispatch => {
   return {
     removeCard: (cardId, listId) => {dispatch(removeCard(cardId, listId))},
     renameCard: (content, cardId, listId) => {dispatch(renameCard(content, cardId, listId))},
-    editDescription: (description, cardId, listId) => {dispatch(editDescription(description, cardId, listId))}
+    editDescription: (description, cardId, listId) => {dispatch(editDescription(description, cardId, listId))},
+    showDetailedCard: (card) => {dispatch(showDetailedCard(card))}
   }
 }
 

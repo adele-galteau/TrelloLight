@@ -116,6 +116,12 @@ export function showDetailedCard(card) {
   }
 }
 
+export function closeDetailedCard() {
+  return {
+    type: types.CLOSE_DETAILED_CARD
+  }
+}
+
 export function addList(list) {
   return {
     type: types.ADD_LIST,

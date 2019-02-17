@@ -22,7 +22,6 @@ class App extends React.Component {
     super(props)
   }
 
-
   render() {
     return (
       <Provider store={this.props.store}>
@@ -31,8 +30,8 @@ class App extends React.Component {
           <React.Fragment>
 
             <Switch>
-              <Route exact path="/login" component={Login}></Route>
-              <PrivateRoute path="/" component={Protected} />
+              <Route path="/login" component={Login}></Route>
+              <PrivateRoute path="/" component={Protected}/>
             </Switch>
             
           </React.Fragment>

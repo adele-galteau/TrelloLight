@@ -149,3 +149,30 @@ export function renameList(title, listId) {
     }
   }
 }
+
+export function showListInput(listId) {
+  return {
+    type: types.SHOW_LIST_INPUT,
+    payload: {
+      listId
+    }
+  }
+}
+
+export function showBoardInput() {
+  return {
+    type: types.SHOW_BOARD_INPUT
+  }
+}
+
+export function hideListInput() {
+  return {
+    type:types.HIDE_LIST_INPUT
+  }
+}
+
+export function hideBoardInput() {
+  return {
+    type: types.HIDE_BOARD_INPUT
+  }
+}

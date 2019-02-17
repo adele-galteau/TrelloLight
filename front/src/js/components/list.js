@@ -5,13 +5,13 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { removeList, renameList } from '../actions/lists'
 import { addCard } from '../actions/cards'
+import { showListInput, hideBoardInput } from '../actions/actionCreators'
 
 class List extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      showInput: false,
       title: ""
     }
 
@@ -21,12 +21,12 @@ class List extends React.Component {
     this.addCard = this.addCard.bind(this)
     this.showInput = this.showInput.bind(this)
     this.onChangeTitle = this.onChangeTitle.bind(this)
+
   }
 
   showInput() {
-    this.setState({
-      showInput: true
-    })
+    this.props.showInput(this.list.id)
+    this.props.hideBoardInput()
   }
 
   onChangeTitle(e) {
@@ -41,9 +41,7 @@ class List extends React.Component {
 
   renameList(e) {
     if (e.keyCode == 13) {
-      this.setState({
-        showInput: false
-      })
+      this.props.hideInput()
 
       const title = this.state.title
 
@@ -68,11 +66,11 @@ class List extends React.Component {
 
         <div className="d-flex justify-content-between">
           {
-            this.state.showInput ?
-              <input id="input" onChange={this.onChangeTitle} onKeyDown={this.renameList} placeholder={this.list.title} className="form-control form-control-sm"></input>
+            this.list.showInput ?
+              <input onChange={this.onChangeTitle} onKeyDown={this.renameList} placeholder={this.list.title} className="hide-input-exception form-control form-control-sm"></input>
             :
-              <h2 onClick={this.showInput} className="m-0" style={{color: "#17394d", fontWeight: "700", fontSize: "14px", padding: "10px 8px 10px 14px"}}>
-              {this.list.title}
+              <h2 className="hide-input-exception m-0" onClick={this.showInput} style={{color: "#17394d", fontWeight: "700", fontSize: "14px", padding: "10px 8px 10px 14px"}}>
+                {this.list.title}
               </h2>
           }
 
@@ -119,11 +117,14 @@ class List extends React.Component {
   }
 }
 
+
 const mapDispatchToProps = dispatch => {
   return {
     removeList: (listId) => {dispatch(removeList(listId))},
     renameList: (title, listId) => {dispatch(renameList(title, listId))},
-    addCard: (content, listId) => {dispatch(addCard(content, listId))}
+    addCard: (content, listId) => {dispatch(addCard(content, listId))},
+    showInput: (listId) => {dispatch(showListInput(listId))},
+    hideBoardInput:() => {dispatch(hideBoardInput())}
   }
 }
 export default withRouter(connect(null, mapDispatchToProps)(List))

@@ -1,15 +1,32 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
+import { hideBoardInput, hideListInput } from '../actions/actionCreators'
+import { connect } from 'react-redux'
 import Board from './board'
 import Boards from './boards'
 import Navbar from './navbar'
 import NotFound from './notFound'
 import InternalServerError from './internalServerError'
 
-export default class Protected extends React.Component {
+class Protected extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.hideInput = this.hideInput.bind(this)
+    }
+
+    hideInput(e) {
+    const exceptions = ".hide-input-exception"
+    
+    if (!e.target.matches(exceptions)) {
+      this.props.hideBoardInput()
+      this.props.hideListInput()
+    }
+  }
+
     render() {
         return (
-            <React.Fragment>
+            <div onClick={this.hideInput}>
                 <Route component={Navbar}></Route>
                 <Switch>
                     <Route path="/board/:boardId" component={Board}></Route>
@@ -17,8 +34,17 @@ export default class Protected extends React.Component {
                     <Route path="/500" component={InternalServerError}></Route>
                     <Route path="/" component={NotFound}></Route>
                 </Switch>
-            </React.Fragment>
+            </div>
             
         )
     }
 }
+
+const mapDispatchToProps = dispatch => {
+    return {
+        hideBoardInput: () => {dispatch(hideBoardInput())},
+        hideListInput: () => {dispatch(hideListInput())}
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Protected)

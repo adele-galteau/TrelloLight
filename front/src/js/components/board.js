@@ -6,13 +6,13 @@ import { connect } from 'react-redux'
 import { getBoard, renameBoard, removeBoard } from '../actions/boards'
 import { addList } from '../actions/lists'
 import { migrateCard } from '../actions/cards'
+import { showBoardInput, hideListInput } from '../actions/actionCreators'
 
 class Board extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      showInput: false,
       title: ""
     }
 
@@ -21,14 +21,14 @@ class Board extends React.Component {
     this.renameBoard = this.renameBoard.bind(this)
     this.addList = this.addList.bind(this)
     this.showInput = this.showInput.bind(this)
+    // this.hideInput = this.hideInput.bind(this)
     this.onChangeTitle = this.onChangeTitle.bind(this)
     this.onDragEnd = this.onDragEnd.bind(this)
   }
 
   showInput() {
-    this.setState({
-      showInput: true
-    })
+    this.props.showInput()
+    this.props.hideListInput()
   }
 
   onChangeTitle(e) {
@@ -45,9 +45,7 @@ class Board extends React.Component {
 
   renameBoard(e) {
     if (e.keyCode == 13) {
-      this.setState({
-        showInput: false
-      })
+      this.props.hideInput()
 
       const title = this.state.title
 
@@ -82,12 +80,12 @@ class Board extends React.Component {
             <div className="col m-2 d-flex justify-content-start" style={{width:"30%"}}>
 
               {
-                this.state.showInput ?
+                this.props.currentBoard.showInput ?
                   <div className="d-flex justify-content-start">
-                    <input onKeyDown={this.renameBoard} onChange={this.onChangeTitle} placeholder={this.props.title} className="form-control form-control-md"></input>
+                    <input className="hide-input-exception form-control form-control-md" onKeyDown={this.renameBoard} onChange={this.onChangeTitle} placeholder={this.props.title}></input>
                   </div>
                 :
-                  <h2 onClick={this.showInput} className="text-light m-1" style={{fontWeight: "700", fontSize: "18px"}}>
+                  <h2 onClick={this.showInput} className="hide-input-exception text-light m-1" style={{fontWeight: "700", fontSize: "18px"}}>
                   {this.props.title}
                   </h2>
               }
@@ -137,6 +135,7 @@ class Board extends React.Component {
 
 const mapStateToProps = state => {
   return {
+    currentBoard: state.currentBoard,
     title: state.currentBoard.title,
     lists: state.currentLists,
     cards: state.currentCards,
@@ -150,7 +149,9 @@ const mapDispatchToProps = dispatch => {
     removeBoard: (boardId) => (dispatch(removeBoard(boardId))),
     renameBoard: (title, boardId) => (dispatch(renameBoard(title, boardId))),
     addList: (title, boardId) => {dispatch(addList(title, boardId))},
-    migrateCard: (cardId, targetListId) => {dispatch(migrateCard(cardId, targetListId))}
+    migrateCard: (cardId, targetListId) => {dispatch(migrateCard(cardId, targetListId))},
+    showInput: () => {dispatch(showBoardInput())},
+    hideListInput: () => {dispatch(hideListInput())}
   }
 }
 

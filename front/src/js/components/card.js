@@ -54,7 +54,7 @@ class Card extends React.Component {
                 <div className="dropdown">
                   <button className="show-detailed-card-exception btn btn-sm dropdown-toggle pt-1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                   <div className="dropdown-menu pt-1 pb-1" aria-labelledby="dropdownMenuButton">
-                    <a onClick={this.removeCard} className="dropdown-item" style={{color: "#17394d", cursor: "text", fontSize: "14px", cursor:"pointer"}}>Delete this card</a>
+                    <a onClick={this.removeCard} className="show-detailed-card-exception dropdown-item" style={{color: "#17394d", cursor: "text", fontSize: "14px", cursor:"pointer"}}>Delete this card</a>
                   </div>
                 </div>
                 

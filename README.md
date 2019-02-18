@@ -1,2 +1,2 @@
 # TrelloLight
-TrelloLight is a light version of the Trello app.
+TrelloLight is a minimalist project management tool inspired by the application Trello.

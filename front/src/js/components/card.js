@@ -26,8 +26,10 @@ class Card extends React.Component {
   }
 
 
-  showDetailedCard() {
-    this.props.showDetailedCard(this.card)
+  showDetailedCard(e) {
+    if (!e.target.matches(".show-detailed-card-exception")) {
+      this.props.showDetailedCard(this.card)
+    }
   }
 
 
@@ -50,7 +52,7 @@ class Card extends React.Component {
                 </p>
 
                 <div className="dropdown">
-                  <button className="btn btn-sm dropdown-toggle pt-1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                  <button className="show-detailed-card-exception btn btn-sm dropdown-toggle pt-1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                   <div className="dropdown-menu pt-1 pb-1" aria-labelledby="dropdownMenuButton">
                     <a onClick={this.removeCard} className="dropdown-item" style={{color: "#17394d", cursor: "text", fontSize: "14px", cursor:"pointer"}}>Delete this card</a>
                   </div>

@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { getBoard, renameBoard, removeBoard } from '../actions/boards'
 import { addList } from '../actions/lists'
 import { migrateCard } from '../actions/cards'
-import { showBoardInput, hideListInput } from '../actions/actionCreators'
+import { showBoardInput, hideBoardInput, hideListInput } from '../actions/actionCreators'
 
 class Board extends React.Component {
   constructor(props) {
@@ -17,12 +17,11 @@ class Board extends React.Component {
     }
 
     this.boardId = this.props.match.params.boardId
+    this.showInput = this.showInput.bind(this)
+    this.onChangeTitle = this.onChangeTitle.bind(this)
+    this.addList = this.addList.bind(this)
     this.removeBoard = this.removeBoard.bind(this)
     this.renameBoard = this.renameBoard.bind(this)
-    this.addList = this.addList.bind(this)
-    this.showInput = this.showInput.bind(this)
-    // this.hideInput = this.hideInput.bind(this)
-    this.onChangeTitle = this.onChangeTitle.bind(this)
     this.onDragEnd = this.onDragEnd.bind(this)
   }
 
@@ -37,6 +36,14 @@ class Board extends React.Component {
     })
   }
 
+  addList() {
+    const title = window.prompt("","New List")
+
+    if (title != null && title.trim()) {
+      this.props.addList(title, this.boardId)
+    }
+  }
+
   removeBoard() {
     if (confirm("This board will be permanently deleted. Are you sure ?")) {
       this.props.removeBoard(this.boardId)
@@ -45,22 +52,13 @@ class Board extends React.Component {
 
   renameBoard(e) {
     if (e.keyCode == 13) {
-      this.props.hideInput()
+      this.props.hideBoardInput()
 
       const title = this.state.title
 
       if (title != null && title.trim()) {
         this.props.renameBoard(title, this.boardId)
       }
-    }
-  }
-
-
-  addList() {
-    const title = window.prompt("","New List")
-
-    if (title != null && title.trim()) {
-      this.props.addList(title, this.boardId)
     }
   }
 
@@ -72,6 +70,7 @@ class Board extends React.Component {
     this.props.getBoard(this.boardId)
   }
 
+
   render() {
     return (
       <React.Fragment>
@@ -82,7 +81,7 @@ class Board extends React.Component {
               {
                 this.props.currentBoard.showInput ?
                   <div className="d-flex justify-content-start">
-                    <input className="hide-input-exception form-control form-control-md" onKeyDown={this.renameBoard} onChange={this.onChangeTitle} placeholder={this.props.title}></input>
+                    <input className="hide-input-exception form-control form-control-md" onKeyDown={this.renameBoard} onChange={this.onChangeTitle} placeholder={this.props.currentBoard.title}></input>
                   </div>
                 :
                   <h2 onClick={this.showInput} className="hide-input-exception text-light m-1" style={{fontWeight: "700", fontSize: "18px"}}>
@@ -151,7 +150,8 @@ const mapDispatchToProps = dispatch => {
     addList: (title, boardId) => {dispatch(addList(title, boardId))},
     migrateCard: (cardId, targetListId) => {dispatch(migrateCard(cardId, targetListId))},
     showInput: () => {dispatch(showBoardInput())},
-    hideListInput: () => {dispatch(hideListInput())}
+    hideListInput: () => {dispatch(hideListInput())},
+    hideBoardInput: () => {dispatch(hideBoardInput())}
   }
 }
 

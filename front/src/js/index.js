@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import App from './components/app'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+// import styles from "../scss/styles.scss"
 import createRootReducer from './reducers'
 import { createHashHistory } from 'history'
 import { routerMiddleware } from 'connected-react-router'

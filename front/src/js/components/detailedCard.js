@@ -11,8 +11,8 @@ class DetailedCard extends React.Component {
         this.state = {
             showContentInput: false,
             showDescriptionInput: false,
-            content: this.props.card.content,
-            description: this.props.card.description
+            content: "",
+            description: ""
         }
         
         this.showContentInput = this.showContentInput.bind(this)
@@ -23,6 +23,12 @@ class DetailedCard extends React.Component {
         this.editDescription = this.editDescription.bind(this)
         this.hideInputs = this.hideInputs.bind(this)
         this.closeDetailedCard = this.closeDetailedCard.bind(this)
+
+        window.addEventListener('keydown', (e) => {
+            if (e.keyCode == 27) {
+                this.props.closeDetailedCard()
+            }
+        })
     }
 
     showContentInput() {
@@ -76,35 +82,21 @@ class DetailedCard extends React.Component {
     } 
 
     hideInputs(e) {
-        const exceptions = ".hide-input-exceptions"
+        const exceptions = ".hide-input-exception"
 
         if (!e.target.matches(exceptions)) {
             this.setState({
                 showContentInput:false,
                 showDescriptionInput: false
             })
-        } 
+        }
     }
 
     closeDetailedCard(e) {
-        const exceptions = ".hide-input-exceptions, .close-detailed-card-exception"
+        const exceptions = ".hide-input-exception, .close-detailed-card-exception"
 
         if (!e.target.matches(exceptions)) {
             this.props.closeDetailedCard()
-        }
-    }
-
-    componentDidUpdate() {
-        let input = document.getElementById("input")
-        let textarea = document.getElementById("textarea")
-
-        if (input != null) {
-            input.focus()
-            input.select()
-        }
-
-        if (textarea != null) {
-            textarea.focus()
         }
     }
 
@@ -117,9 +109,9 @@ class DetailedCard extends React.Component {
                             <div className="close-detailed-card-exception" style={{padding: "12px 40px 25px 56px"}}>
                                 {
                                     this.state.showContentInput ?
-                                        <input className="hide-input-exceptions" onChange={this.onChangeContent} onKeyDown={this.renameCard} value={this.state.content} className="form-control form-control-sm"></input>
+                                        <input id="detailed-card-content-input" className="hide-input-exception form-control form-control-sm" onChange={this.onChangeContent} onKeyDown={this.renameCard} placeholder={this.props.card.content}></input>
                                     :
-                                        <h1 className="hide-input-exceptions" onClick={this.showContentInput} style={{fontSize: "20px", fontWeight: "700", color: "#17394d", margin: "0"}}>{this.props.card.content}</h1>
+                                        <h1 className="hide-input-exception" onClick={this.showContentInput} style={{fontSize: "20px", fontWeight: "700", color: "#17394d", margin: "0"}}>{this.props.card.content}</h1>
                                 }
                                 <p className="close-detailed-card-exception" style={{color: "#6b808c", margin: "0", fontSize: "14px", fontWeight: "400"}}>in list {this.props.list.title}</p>
                             </div>
@@ -131,13 +123,13 @@ class DetailedCard extends React.Component {
                                     this.state.showDescriptionInput ?
                                        (
                                         <div className="close-detailed-card-exception">
-                                            <textarea className="hide-input-exceptions" onChange={this.onChangeDescripton} value={this.state.description}></textarea>
-                                            <button className="hide-input-exceptions" onClick={this.editDescription}>Save</button>
+                                            <textarea id="detailed-card-description-textarea" className="hide-input-exception" onChange={this.onChangeDescripton} placeholder={this.props.card.description}></textarea>
+                                            <button className="hide-input-exception" onClick={this.editDescription}>Save</button>
                                         </div>
                                        )
                                     :
                                         <div className="close-detailed-card-exception" onClick={this.showDescriptionInput} style={{borderRadius: "3px", background: "rgba(9,45,66,.08)"}}>
-                                            <p className="hide-input-exceptions" style={{color: "#6b808c", fontSize: "14px", margin: "0", height: "54px", padding: "7px 9px"}}>
+                                            <p className="hide-input-exception" style={{color: "#6b808c", fontSize: "14px", margin: "0", height: "54px", padding: "7px 9px"}}>
                                                 {this.props.card.description ? this.props.card.description : "Add a more detailed description..."}
                                             </p>
                                         </div>

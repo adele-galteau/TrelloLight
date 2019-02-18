@@ -5,7 +5,7 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import { removeList, renameList } from '../actions/lists'
 import { addCard } from '../actions/cards'
-import { showListInput, hideBoardInput } from '../actions/actionCreators'
+import { showListInput, hideListInput, hideBoardInput } from '../actions/actionCreators'
 
 class List extends React.Component {
   constructor(props) {
@@ -21,7 +21,6 @@ class List extends React.Component {
     this.addCard = this.addCard.bind(this)
     this.showInput = this.showInput.bind(this)
     this.onChangeTitle = this.onChangeTitle.bind(this)
-
   }
 
   showInput() {
@@ -41,7 +40,7 @@ class List extends React.Component {
 
   renameList(e) {
     if (e.keyCode == 13) {
-      this.props.hideInput()
+      this.props.hideListInput()
 
       const title = this.state.title
 
@@ -67,7 +66,7 @@ class List extends React.Component {
         <div className="d-flex justify-content-between">
           {
             this.list.showInput ?
-              <input onChange={this.onChangeTitle} onKeyDown={this.renameList} placeholder={this.list.title} className="hide-input-exception form-control form-control-sm"></input>
+              <input ref={(input) => {this.input = input}} onChange={this.onChangeTitle} onKeyDown={this.renameList} placeholder={this.props.list.title} className="hide-input-exception form-control form-control-sm"></input>
             :
               <h2 className="hide-input-exception m-0" onClick={this.showInput} style={{color: "#17394d", fontWeight: "700", fontSize: "14px", padding: "10px 8px 10px 14px"}}>
                 {this.list.title}
@@ -124,6 +123,7 @@ const mapDispatchToProps = dispatch => {
     renameList: (title, listId) => {dispatch(renameList(title, listId))},
     addCard: (content, listId) => {dispatch(addCard(content, listId))},
     showInput: (listId) => {dispatch(showListInput(listId))},
+    hideListInput: () => {dispatch(hideListInput())},
     hideBoardInput:() => {dispatch(hideBoardInput())}
   }
 }

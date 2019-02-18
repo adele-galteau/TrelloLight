@@ -257,7 +257,6 @@ class API {
       .then(this._status)
       .then(this._json)
       .then(resp => {
-        console.log(resp)
         return resp
       })
   }
@@ -273,7 +272,6 @@ class API {
       .then(this._status)
       .then(this._json)
       .then(resp => {
-        console.log(resp)
         return resp
       })
   }

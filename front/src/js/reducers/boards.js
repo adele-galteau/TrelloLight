@@ -1,5 +1,4 @@
-import { RECEIVE_BOARDS, ADD_BOARD, REMOVE_BOARD } from '../actions/boards'
-import { RENAME_BOARD } from '../actions/board'
+import { RECEIVE_BOARDS, ADD_BOARD, REMOVE_BOARD, RENAME_BOARD } from '../actions/actionTypes'
 
 export const boards = (state = [], action) => {
   switch (action.type) {

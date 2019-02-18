@@ -1,19 +1,26 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import { DragDropContext } from 'react-beautiful-dnd'
+import Protected from './protected'
 import Login from './login'
-import Board from './board'
-import Boards from './boards'
-import Navbar from './navbar'
 import NotFound from './notFound'
+
+const PrivateRoute = ({component: Component, ...rest}) => (
+  <Route {...rest} render={(props) => (
+    localStorage.getItem("token") ?
+      <Component {...props} />
+      :
+      <Redirect to="/login" />
+  )}>
+  </Route>
+)
 
 class App extends React.Component {
   constructor(props) {
     super(props)
   }
-
 
   render() {
     return (
@@ -23,18 +30,10 @@ class App extends React.Component {
           <React.Fragment>
 
             <Switch>
-              <Route exact path="/login" component={Login}></Route>
-              <Route path="/" component={Navbar}></Route>
+              <Route path="/login" component={Login}></Route>
+              <PrivateRoute path="/" component={Protected}/>
             </Switch>
-
-            <Switch>
-              <Route path="/board/:boardId" component={Board}></Route>
-              <Route path="/boards" component={Boards}></Route>
-              <Route path="/login"></Route>
-              <Route exact path="/" component={Boards}></Route>
-              <Route path="/" component={NotFound}></Route>
-            </Switch>
-
+            
           </React.Fragment>
         </ConnectedRouter>
 

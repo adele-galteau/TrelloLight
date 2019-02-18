@@ -1,16 +1,19 @@
-from trello_light.models import List, list_schema, lists_schema, Board
+from trello_light.models import List, Board
 from trello_light import app, db
+from trello_light.schemas import list_schema, lists_schema
 from .token import auth
 from flask import jsonify, request, g
 
 
-@app.route("/lists/<board_id>", methods=["GET"])
+@app.route("/lists", methods=["GET"])
 @auth
-def get_lists(board_id):
+def get_lists():
+    board_id = request.args.get("board_id")
+
     board = Board.query.filter_by(user_id=g.user, id=board_id).first()
 
     if not board:
-        return "No board for this id", 404
+        return "No such list for this board or wrong authentication.", 404
 
     lists = List.query.filter_by(board_id=board.id).all()
 
@@ -18,13 +21,15 @@ def get_lists(board_id):
 
 
 
-@app.route("/list/<board_id>", methods=["POST"])
+@app.route("/list", methods=["POST"])
 @auth
-def create_list(board_id):
+def create_list():
+    board_id = request.args.get("board_id")
+
     board = Board.query.filter_by(user_id=g.user, id=board_id).first()
 
     if not board:
-        return "Wrong authentication", 401
+        return "No such board for this id or wrong authentication.", 401
 
     result = list_schema.load(request.json)
 
@@ -46,12 +51,12 @@ def modify_list_title(list_id):
     list = List.query.filter_by(id=list_id).first()
 
     if not list:
-        return "No list for this id or user"
+        return "No such list for this id.", 404
 
     board = Board.query.filter_by(user_id=g.user, id=list.board_id).first()
 
     if not board:
-        return "No list for this board or wrong authentication", 404
+        return "No such list for this board or wrong authentication.", 404
 
     result = list_schema.load(request.json)
 
@@ -70,12 +75,12 @@ def delete_list(list_id):
     list = List.query.filter_by(id=list_id).first()
 
     if not list:
-        return "No list for this id or user"
+        return "No such list for this id or user.", 404
 
     board = Board.query.filter_by(user_id=g.user, id=list.board_id).first()
 
     if not board:
-        return "No list for this board or wrong authentication", 404
+        return "No such list for this board or wrong authentication.", 404
 
     db.session.delete(list)
     db.session.commit()

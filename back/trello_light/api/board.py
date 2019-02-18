@@ -1,5 +1,6 @@
-from trello_light.models import Board, board_schema, boards_schema, nestedBoard_schema
+from trello_light.models import Board
 from trello_light import app, db
+from trello_light.schemas import board_schema, boards_schema, nestedBoard_schema
 from .token import auth
 from flask import jsonify, request, g
 
@@ -18,7 +19,7 @@ def get_board(id):
     board = Board.query.filter_by(user_id=g.user, id=id).first()
 
     if not board:
-        return "No board for this id or user", 404
+        return "No such board for this id or user.", 404
 
     return nestedBoard_schema.jsonify(board)
 
@@ -45,7 +46,7 @@ def modify_board_title(id):
     board = Board.query.filter_by(user_id=g.user, id=id).first()
 
     if not board:
-        return "No board for this id or user", 404
+        return "No such board for this id or user", 404
 
     result = board_schema.load(request.json)
 
@@ -66,7 +67,7 @@ def delete_board(id):
     board = Board.query.filter_by(user_id=g.user, id=id).first()
 
     if not board:
-        return "No board for this id or user", 404
+        return "No such board for this id or user", 404
 
     db.session.delete(board)
     db.session.commit()

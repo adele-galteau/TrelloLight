@@ -31,7 +31,7 @@ class Navbar extends React.Component {
           <a className="navbar-brand" style={{cursor: "pointer", fontWeight: "bold", color: "hsl(202, 49%, 66%)"}}>TrelloLight</a>
 
           <button onClick={this.logout} className="btn btn-sm text-light  " style={{background: "hsl(202, 48%, 53%)", fontWeight: "bold"}}>
-            Logout
+            Log Out
           </button>
 
 

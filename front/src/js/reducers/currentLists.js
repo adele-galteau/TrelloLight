@@ -1,4 +1,4 @@
-import { RECEIVE_BOARD, ADD_LIST, REMOVE_LIST, RENAME_LIST, SHOW_LIST_INPUT, HIDE_LIST_INPUT } from '../actions/actionTypes'
+import { RECEIVE_BOARD, ADD_LIST, REMOVE_LIST, RENAME_LIST, SHOW_LIST_INPUT, HIDE_LIST_INPUT, SHOW_NEW_CARD_INPUT, HIDE_NEW_CARD_INPUT } from '../actions/actionTypes'
 
 const initialState = []
 
@@ -9,7 +9,8 @@ export const currentLists = (state = initialState, action) => {
           return {
             title: list.title,
             id: list.id,
-            showInput: false
+            showInput: false,
+            showNewCardInput: false
           }
         })
 
@@ -19,7 +20,8 @@ export const currentLists = (state = initialState, action) => {
         {
           title: action.payload.list.title,
           id: action.payload.list.id,
-          showInput: false
+          showInput: false,
+          showNewCardInput: false
         }
       ]
 
@@ -47,6 +49,22 @@ export const currentLists = (state = initialState, action) => {
     case HIDE_LIST_INPUT:
       return state.map(list => {
         list.showInput = false
+        return list
+      })
+
+    case SHOW_NEW_CARD_INPUT:
+      return state.map(list => {
+        if (list.id == action.payload.listId) {
+          list.showNewCardInput = true
+        } else {
+          list.showNewCardInput = false
+        }
+        return list
+      })
+
+    case HIDE_NEW_CARD_INPUT:
+      return state.map(list => {
+        list.showNewCardInput = false
         return list
       })
 

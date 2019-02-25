@@ -1,6 +1,6 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import { hideBoardInput, hideListInput, hideNewListInput } from '../actions/actionCreators'
+import { hideBoardInput, hideListInput, hideNewListInput, hideNewCardInput } from '../actions/actionCreators'
 import { connect } from 'react-redux'
 import Board from './board'
 import Boards from './boards'
@@ -22,6 +22,7 @@ class Protected extends React.Component {
         this.props.hideBoardInput()
         this.props.hideListInput()
         this.props.hideNewListInput()
+        this.props.hideNewCardInput()
         }
     }
 
@@ -45,7 +46,8 @@ const mapDispatchToProps = dispatch => {
     return {
         hideBoardInput: () => {dispatch(hideBoardInput())},
         hideListInput: () => {dispatch(hideListInput())},
-        hideNewListInput: () => {dispatch(hideNewListInput())}
+        hideNewListInput: () => {dispatch(hideNewListInput())},
+        hideNewCardInput: () => {dispatch(hideNewCardInput())}
     }
 }
 

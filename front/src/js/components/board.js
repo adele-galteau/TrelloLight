@@ -43,6 +43,10 @@ class Board extends React.Component {
 
   hideNewListInput() {
     this.props.hideNewListInput()
+
+    this.setState({
+      newListTitle: ""
+    })
   }
 
   onChangeTitle(e) {
@@ -145,7 +149,7 @@ class Board extends React.Component {
                     
                     <div className="d-flex align-items-center">
                       <button onClick={this.addList} className="hide-input-exception btn btn-success btn-sm ml" style={{fontWeight:"700"}}>Add List</button>
-                      <button onClick={this.hideNewListInput} style={{border: "none", background: "transparent", fontWeight: "400", color: "#798d99", fontSize: "29px", lineHeight: "32px"}}>&times;</button>
+                      <button onClick={this.hideNewListInput} style={{border: "none", background: "transparent", fontWeight: "400", color: "#798d99", fontSize: "29px", lineHeight: "32px", cursor: "pointer"}}>&times;</button>
                     </div>
                 </div>
               :

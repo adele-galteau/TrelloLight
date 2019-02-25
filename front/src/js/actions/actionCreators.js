@@ -159,21 +159,15 @@ export function showListInput(listId) {
   }
 }
 
-export function showBoardInput() {
-  return {
-    type: types.SHOW_BOARD_INPUT
-  }
-}
-
-export function showNewListInput() {
-  return {
-    type: types.SHOW_NEW_LIST_INPUT
-  }
-}
-
 export function hideListInput() {
   return {
     type: types.HIDE_LIST_INPUT
+  }
+}
+
+export function showBoardInput() {
+  return {
+    type: types.SHOW_BOARD_INPUT
   }
 }
 
@@ -183,8 +177,29 @@ export function hideBoardInput() {
   }
 }
 
+export function showNewListInput() {
+  return {
+    type: types.SHOW_NEW_LIST_INPUT
+  }
+}
+
 export function hideNewListInput() {
   return {
     type: types.HIDE_NEW_LIST_INPUT
+  }
+}
+
+export function showNewCardInput(listId) {
+  return {
+    type: types.SHOW_NEW_CARD_INPUT,
+    payload: {
+      listId
+    }
+  }
+}
+
+export function hideNewCardInput() {
+  return {
+    type: types.HIDE_NEW_CARD_INPUT
   }
 }

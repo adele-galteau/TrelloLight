@@ -2,7 +2,7 @@ import 'whatwg-fetch'
 
 class API {
   constructor() {
-    this.url = 'http://localhost:5000'
+    this.url = '/api'
     this.contentType = { 'Content-Type': 'application/json'}
   }
 

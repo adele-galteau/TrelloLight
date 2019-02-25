@@ -7,6 +7,14 @@ const htmlWebpackPlugin = new HtmlWebPackPlugin({
 
 module.exports = {
   entry: './src/js/index.js',
+  devServer: {
+    watchOptions: {
+        poll: true
+    },
+    proxy: {
+      '/api': 'http://localhost:5000'
+    }
+  },
   module: {
     rules: [
       {

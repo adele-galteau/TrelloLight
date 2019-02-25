@@ -43,10 +43,10 @@ class Login extends React.Component {
               <h1 style={{fontSize: "38px", fontWeight: "700", color: "#333", marginBottom: "20px"}}>Log in to TrelloLight</h1>
               <div className="form-group">
                 <label style={{fontSize: "16px", fontWeight: "300", color: "#4d4d4d"}}>Username</label>
-                <input onChange={this.onChangeUsername} className="form-control mb-3 bg-light" type="text" minLength="1" maxLength="80" required={true} placeholder="simon"/>
+                <input onChange={this.onChangeUsername} className="form-control mb-3 bg-light" type="text" minLength="1" maxLength="80" required={true}/>
 
                 <label>Password</label>
-                <input onChange={this.onChangePassword} className="form-control mb-3 bg-light" type="password" minLength="1" maxLength="80" required={true} placeholder="simon_pass"/>
+                <input onChange={this.onChangePassword} className="form-control mb-3 bg-light" type="password" minLength="1" maxLength="80" required={true}/>
               </div>
               <button onClick={this.login} type='submit' className="btn btn-block"style={{fontWeight: "700", boxShadow: "0 2px 0 #3F6F21", background: "#61BD4F", color: "white"}}>Log In</button>
             </form>

@@ -22,7 +22,7 @@ def auth(fn):
     return f
 
 
-@app.route("/token", methods=["GET"])
+@app.route("/api/token", methods=["GET"])
 def get_token():
     t_str = request.headers.get('X-Authenticate', '')
     t = Token.query.filter_by(token=t_str).first()
@@ -33,7 +33,7 @@ def get_token():
     return "", 200
 
 
-@app.route("/login", methods=["POST"])
+@app.route("/api/login", methods=["POST"])
 def login():
     result = user_schema.load(request.json, session=db.session)
 
@@ -56,7 +56,7 @@ def login():
     return token_schema.jsonify(token)
 
 
-@app.route("/logout", methods=["DELETE"])
+@app.route("/api/logout", methods=["DELETE"])
 @auth
 def logout():
     tokens = Token.query.filter_by(user_id=g.user).all()

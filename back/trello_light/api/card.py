@@ -5,7 +5,7 @@ from .token import auth
 from flask import jsonify, request, g
 
 
-@app.route("/cards", methods=["GET"])
+@app.route("/api/cards", methods=["GET"])
 @auth
 def get_cards():
     board_id = request.args.get("board_id")
@@ -27,7 +27,7 @@ def get_cards():
     return cards_schema.jsonify(cards)
 
 
-@app.route("/card", methods=["POST"])
+@app.route("/api/card", methods=["POST"])
 @auth
 def create_card():
     list_id = request.args.get("list_id")
@@ -56,7 +56,7 @@ def create_card():
 
 
 
-@app.route("/card/<card_id>", methods=["PUT"])
+@app.route("/api/card/<card_id>", methods=["PUT"])
 @auth
 def modify_card(card_id):
     card = Card.query.filter_by(id=card_id).first()
@@ -96,7 +96,7 @@ def modify_card(card_id):
     return card_schema.jsonify(card)
 
 
-@app.route("/card/<card_id>", methods=["DELETE"])
+@app.route("/api/card/<card_id>", methods=["DELETE"])
 @auth
 def delete_card(card_id):
     card = Card.query.filter_by(id=card_id).first()
@@ -120,7 +120,7 @@ def delete_card(card_id):
     return card_schema.jsonify(card)
 
 
-@app.route("/card", methods=["PUT"])
+@app.route("/api/card", methods=["PUT"])
 @auth
 def migrate_card():
     card_id = request.args.get("card_id")

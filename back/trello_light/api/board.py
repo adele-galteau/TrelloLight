@@ -5,7 +5,7 @@ from .token import auth
 from flask import jsonify, request, g
 
 
-@app.route("/boards", methods=["GET"])
+@app.route("/api/boards", methods=["GET"])
 @auth
 def get_boards():
     boards = Board.query.filter_by(user_id=g.user).all()
@@ -13,7 +13,7 @@ def get_boards():
     return boards_schema.jsonify(boards)
 
 
-@app.route("/board/<id>", methods=["GET"])
+@app.route("/api/board/<id>", methods=["GET"])
 @auth
 def get_board(id):
     board = Board.query.filter_by(user_id=g.user, id=id).first()
@@ -24,7 +24,7 @@ def get_board(id):
     return nestedBoard_schema.jsonify(board)
 
 
-@app.route("/board", methods=["POST"])
+@app.route("/api/board", methods=["POST"])
 @auth
 def create_board():
     result = board_schema.load(request.json)
@@ -40,7 +40,7 @@ def create_board():
     return board_schema.jsonify(result.data)
 
 
-@app.route("/board/<id>", methods=["PUT"])
+@app.route("/api/board/<id>", methods=["PUT"])
 @auth
 def modify_board_title(id):
     board = Board.query.filter_by(user_id=g.user, id=id).first()
@@ -61,7 +61,7 @@ def modify_board_title(id):
     return board_schema.jsonify(board)
 
 
-@app.route("/board/<id>", methods=["DELETE"])
+@app.route("/api/board/<id>", methods=["DELETE"])
 @auth
 def delete_board(id):
     board = Board.query.filter_by(user_id=g.user, id=id).first()

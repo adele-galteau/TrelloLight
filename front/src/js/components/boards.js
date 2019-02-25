@@ -1,26 +1,23 @@
 import React from 'react'
 import BoardTile from './boardTile'
+import NewBoardForm from './newBoardForm'
 import { connect } from 'react-redux'
 import { getBoards } from '../actions/boards'
-import { addBoard } from '../actions/boards'
+import { showNewBoardForm } from '../actions/actionCreators'
 
 class Boards extends React.Component {
   constructor(props) {
     super(props)
 
-    this.addBoard = this.addBoard.bind(this)
+    this.showNewBoardForm = this.showNewBoardForm.bind(this)
   }
 
+  showNewBoardForm() {
+    this.props.showNewBoardForm()
+  }
+  
   componentDidMount() {
     this.props.getBoards()
-  }
-
-  addBoard() {
-    const boardTitle = window.prompt("", "Add board title")
-
-    if (boardTitle != null && boardTitle.trim()) {
-      this.props.addBoard(boardTitle)
-    }
   }
 
   render() {
@@ -40,7 +37,7 @@ class Boards extends React.Component {
               }
 
                 <div className="col-6">
-                  <div onClick={this.addBoard} className="d-flex justify-content-center align-items-center" style={{background:"rgba(9,45,66,.08)", borderRadius: "3px", height: "96px", cursor: "pointer"}}>
+                  <div onClick={this.showNewBoardForm} className="d-flex justify-content-center align-items-center" style={{background:"rgba(9,45,66,.08)", borderRadius: "3px", height: "96px", cursor: "pointer"}}>
                     <p style={{color: "#6b808c", fontSize: "14px"}}>Create new board...</p>
                   </div>
                 </div>
@@ -50,6 +47,14 @@ class Boards extends React.Component {
             </div>
           </div>
         </div>
+
+        {
+          this.props.newBoardForm.show ?
+            <NewBoardForm />
+          :
+            ""
+        }
+
       </React.Fragment>
     )
   }
@@ -57,14 +62,16 @@ class Boards extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    boards: state.boards
+    boards: state.boards,
+    newBoardForm: state.newBoardForm
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     getBoards: () => {dispatch(getBoards())},
-    addBoard: (boardTitle) => {dispatch(addBoard(boardTitle))}
+    showNewBoardForm: () => {dispatch(showNewBoardForm())},
+    hideNewBoardForm:() => {dispatch(hideNewBoardForm())}
   }
 }
 

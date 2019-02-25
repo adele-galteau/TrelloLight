@@ -146,7 +146,7 @@ class List extends React.Component {
               </div>
 
               <div className="hide-input-exception d-flex align-items-center" style={{margin:"0 4px 2px 4px"}}>
-                <button onClick={this.addCard} className="hide-input-exception btn btn-success btn-sm ml" style={{fontWeight:"700"}}>Add List</button>
+                <button onClick={this.addCard} className="hide-input-exception btn btn-success btn-sm" style={{fontWeight:"700"}}>Add List</button>
                 <button onClick={this.hideNewCardInput} className="hide-input-exception" style={{border: "none", background: "transparent", fontWeight: "400", color: "#798d99", fontSize: "29px", lineHeight: "32px", cursor: "pointer"}}>&times;</button>
               </div>
             </div>

@@ -140,17 +140,17 @@ class Board extends React.Component {
 
             {
               this.props.currentBoard.showNewListInput ? 
-                <div className="p-1 mr-2 mb-3" style={{display:"inline-block", width: "272px", background: "#dfe3e6", borderRadius: "3px"}}> 
+                <div className="hide-input-exception p-1 mr-2 mb-3" style={{display:"inline-block", width: "272px", background: "#dfe3e6", borderRadius: "3px"}}> 
                     <input className="hide-input-exception form-control form-control-sm mb-1" onChange={this.onChangeNewListTitle} value={this.state.newListTitle} placeholder="Enter list title..."></input>
                     
                     <div className="d-flex align-items-center">
-                      <button onClick={this.addList} className="btn btn-success btn-sm ml" style={{fontWeight:"700"}}>Add List</button>
+                      <button onClick={this.addList} className="hide-input-exception btn btn-success btn-sm ml" style={{fontWeight:"700"}}>Add List</button>
                       <button onClick={this.hideNewListInput} style={{border: "none", background: "transparent", fontWeight: "400", color: "#798d99", fontSize: "29px", lineHeight: "32px"}}>&times;</button>
                     </div>
                 </div>
               :
-                <div onClick={this.showNewListInput} className="p-1 mr-2 d-flex d-flex align-items-center" style={{display:"inline-block", width: "272px", background: "#006aa8", borderRadius: "3px", cursor: "pointer"}}>
-                  <p className="m-2" style={{color: "#c5ddeb", fontSize: "14px"}}>+ Add a list</p>
+                <div onClick={this.showNewListInput} className="hide-input-exception p-1 mr-2 d-flex d-flex align-items-center" style={{display:"inline-block", width: "272px", background: "#006aa8", borderRadius: "3px", cursor: "pointer"}}>
+                  <p className="hide-input-exception m-2" style={{color: "#c5ddeb", fontSize: "14px"}}>+ Add a list</p>
                 </div>
             }
 

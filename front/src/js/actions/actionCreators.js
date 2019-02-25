@@ -55,6 +55,18 @@ export function renameBoard(title, boardId) {
   }
 }
 
+export function showNewBoardForm() {
+  return {
+    type: types.SHOW_NEW_BOARD_FORM
+  }
+}
+
+export function hideNewBoardForm() {
+  return {
+    type: types.HIDE_NEW_BOARD_FORM
+  }
+}
+
 export function addCard(card, listId) {
   return {
     type: types.ADD_CARD,

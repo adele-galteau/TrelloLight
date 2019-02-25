@@ -5,6 +5,9 @@ export const RECEIVE_BOARD = 'RECEIVE_BOARD'
 export const RECEIVE_CARDS = "RECEIVE_CARDS"
 export const RENAME_BOARD = 'RENAME_BOARD'
 
+export const SHOW_NEW_BOARD_FORM = "SHOW_NEW_BOARD_FORM"
+export const HIDE_NEW_BOARD_FORM = "HIDE_NEW_BOARD_FORM"
+
 export const ADD_LIST = "ADD_LIST"
 export const REMOVE_LIST = "REMOVE_LIST"
 export const RENAME_LIST = "RENAME_LIST"

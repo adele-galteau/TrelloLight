@@ -31,8 +31,7 @@ class Protected extends React.Component {
                 <Switch>
                     <Route path="/board/:boardId" component={Board}></Route>
                     <Route path="/boards" component={Boards}></Route>
-                    <Route path="/500" component={InternalServerError}></Route>
-                    <Route path="/" component={NotFound}></Route>
+                    <Route path="/" component={Boards}></Route>
                 </Switch>
             </div>
             

@@ -165,14 +165,26 @@ export function showBoardInput() {
   }
 }
 
+export function showNewListInput() {
+  return {
+    type: types.SHOW_NEW_LIST_INPUT
+  }
+}
+
 export function hideListInput() {
   return {
-    type:types.HIDE_LIST_INPUT
+    type: types.HIDE_LIST_INPUT
   }
 }
 
 export function hideBoardInput() {
   return {
     type: types.HIDE_BOARD_INPUT
+  }
+}
+
+export function hideNewListInput() {
+  return {
+    type: types.HIDE_NEW_LIST_INPUT
   }
 }

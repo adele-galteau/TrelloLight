@@ -4,7 +4,9 @@ from flask_marshmallow import Marshmallow
 from flask_cors import CORS
 from flask_env import MetaFlaskEnv
 
-class Configuration(metaclass=MetaFlaskEnv):
+class Configuration(object):
+    __metaclass__ = MetaFlaskEnv
+    
     SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/trello_light.db'
     DEBUG = True
     SQLALCHEMY_ECHO = True

@@ -1,4 +1,4 @@
-import { RECEIVE_BOARD, RENAME_BOARD, SHOW_BOARD_INPUT, HIDE_BOARD_INPUT } from '../actions/actionTypes'
+import { RECEIVE_BOARD, RENAME_BOARD, SHOW_BOARD_INPUT, HIDE_BOARD_INPUT, SHOW_NEW_LIST_INPUT, HIDE_NEW_LIST_INPUT } from '../actions/actionTypes'
 
 const initialState = {
   title: ""
@@ -28,6 +28,18 @@ export const currentBoard = (state = initialState, action) => {
       return {
         ...state,
         showInput: false
+      }
+
+    case SHOW_NEW_LIST_INPUT:
+      return {
+        ...state,
+        showNewListInput: true
+      }
+
+    case HIDE_NEW_LIST_INPUT:
+      return {
+        ...state,
+        showNewListInput: false
       }
       
     default:

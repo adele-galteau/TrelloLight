@@ -55,6 +55,18 @@ export function renameBoard(title, boardId) {
   }
 }
 
+export function showNewBoardForm() {
+  return {
+    type: types.SHOW_NEW_BOARD_FORM
+  }
+}
+
+export function hideNewBoardForm() {
+  return {
+    type: types.HIDE_NEW_BOARD_FORM
+  }
+}
+
 export function addCard(card, listId) {
   return {
     type: types.ADD_CARD,
@@ -159,20 +171,47 @@ export function showListInput(listId) {
   }
 }
 
+export function hideListInput() {
+  return {
+    type: types.HIDE_LIST_INPUT
+  }
+}
+
 export function showBoardInput() {
   return {
     type: types.SHOW_BOARD_INPUT
   }
 }
 
-export function hideListInput() {
-  return {
-    type:types.HIDE_LIST_INPUT
-  }
-}
-
 export function hideBoardInput() {
   return {
     type: types.HIDE_BOARD_INPUT
+  }
+}
+
+export function showNewListInput() {
+  return {
+    type: types.SHOW_NEW_LIST_INPUT
+  }
+}
+
+export function hideNewListInput() {
+  return {
+    type: types.HIDE_NEW_LIST_INPUT
+  }
+}
+
+export function showNewCardInput(listId) {
+  return {
+    type: types.SHOW_NEW_CARD_INPUT,
+    payload: {
+      listId
+    }
+  }
+}
+
+export function hideNewCardInput() {
+  return {
+    type: types.HIDE_NEW_CARD_INPUT
   }
 }

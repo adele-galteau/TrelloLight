@@ -5,7 +5,7 @@ from .token import auth
 from flask import jsonify, request, g
 
 
-@app.route("/lists", methods=["GET"])
+@app.route("/api/lists", methods=["GET"])
 @auth
 def get_lists():
     board_id = request.args.get("board_id")
@@ -21,7 +21,7 @@ def get_lists():
 
 
 
-@app.route("/list", methods=["POST"])
+@app.route("/api/list", methods=["POST"])
 @auth
 def create_list():
     board_id = request.args.get("board_id")
@@ -45,7 +45,7 @@ def create_list():
 
 
 
-@app.route("/list/<list_id>", methods=["PUT"])
+@app.route("/api/list/<list_id>", methods=["PUT"])
 @auth
 def modify_list_title(list_id):
     list = List.query.filter_by(id=list_id).first()
@@ -69,7 +69,7 @@ def modify_list_title(list_id):
 
 
 
-@app.route("/list/<list_id>", methods=["DELETE"])
+@app.route("/api/list/<list_id>", methods=["DELETE"])
 @auth
 def delete_list(list_id):
     list = List.query.filter_by(id=list_id).first()

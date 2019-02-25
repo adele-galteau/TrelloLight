@@ -6,28 +6,47 @@ import { connect } from 'react-redux'
 import { getBoard, renameBoard, removeBoard } from '../actions/boards'
 import { addList } from '../actions/lists'
 import { migrateCard } from '../actions/cards'
-import { showBoardInput, hideBoardInput, hideListInput } from '../actions/actionCreators'
+import { showBoardInput, hideBoardInput, hideListInput, showNewListInput, hideNewListInput } from '../actions/actionCreators'
 
 class Board extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      title: ""
+      title: "",
+      newListTitle: ""
     }
 
     this.boardId = this.props.match.params.boardId
-    this.showInput = this.showInput.bind(this)
+    this.showBoardInput = this.showBoardInput.bind(this)
+    this.showNewListInput = this.showNewListInput.bind(this)
+    this.hideNewListInput = this.hideNewListInput.bind(this)
     this.onChangeTitle = this.onChangeTitle.bind(this)
+    this.onChangeNewListTitle = this.onChangeNewListTitle.bind(this)
     this.addList = this.addList.bind(this)
     this.removeBoard = this.removeBoard.bind(this)
     this.renameBoard = this.renameBoard.bind(this)
     this.onDragEnd = this.onDragEnd.bind(this)
   }
 
-  showInput() {
-    this.props.showInput()
+  showBoardInput() {
+    this.props.showBoardInput()
+    this.props.hideNewListInput()
     this.props.hideListInput()
+  }
+
+  showNewListInput() {
+    this.props.showNewListInput()
+    this.props.hideBoardInput()
+    this.props.hideListInput()
+  }
+
+  hideNewListInput() {
+    this.props.hideNewListInput()
+
+    this.setState({
+      newListTitle: ""
+    })
   }
 
   onChangeTitle(e) {
@@ -36,11 +55,21 @@ class Board extends React.Component {
     })
   }
 
+  onChangeNewListTitle(e) {
+    this.setState({
+      newListTitle: e.target.value
+    })
+  }
+
   addList() {
-    const title = window.prompt("","New List")
+    const title = this.state.newListTitle
 
     if (title != null && title.trim()) {
       this.props.addList(title, this.boardId)
+
+      this.setState({
+        newListTitle: ""
+      })
     }
   }
 
@@ -84,7 +113,7 @@ class Board extends React.Component {
                     <input className="hide-input-exception form-control form-control-md" onKeyDown={this.renameBoard} onChange={this.onChangeTitle} placeholder={this.props.currentBoard.title}></input>
                   </div>
                 :
-                  <h2 onClick={this.showInput} className="hide-input-exception text-light m-1" style={{fontWeight: "700", fontSize: "18px"}}>
+                  <h2 onClick={this.showBoardInput} className="hide-input-exception text-light m-1" style={{fontWeight: "700", fontSize: "18px"}}>
                   {this.props.title}
                   </h2>
               }
@@ -113,9 +142,21 @@ class Board extends React.Component {
               }
             </DragDropContext>
 
-            <div onClick={this.addList} className="p-1 mr-2 d-flex d-flex align-items-center" style={{display:"inline-block", width: "272px", background: "#006aa8", borderRadius: "3px", cursor: "pointer"}}>
-              <p className="m-2" style={{color: "#c5ddeb", fontSize: "14px"}}>+ Add a list</p>
-            </div>
+            {
+              this.props.currentBoard.showNewListInput ? 
+                <div className="hide-input-exception p-1 mr-2 mb-3" style={{display:"inline-block", width: "272px", background: "#dfe3e6", borderRadius: "3px"}}> 
+                    <input className="hide-input-exception form-control form-control-sm mb-1" onChange={this.onChangeNewListTitle} value={this.state.newListTitle} placeholder="Enter list title..."></input>
+                    
+                    <div className="d-flex align-items-center">
+                      <button onClick={this.addList} className="hide-input-exception btn btn-success btn-sm ml" style={{fontWeight:"700"}}>Add List</button>
+                      <button onClick={this.hideNewListInput} style={{border: "none", background: "transparent", fontWeight: "400", color: "#798d99", fontSize: "29px", lineHeight: "32px", cursor: "pointer"}}>&times;</button>
+                    </div>
+                </div>
+              :
+                <div onClick={this.showNewListInput} className="hide-input-exception p-1 mr-2 d-flex d-flex align-items-center" style={{display:"inline-block", width: "272px", background: "#006aa8", borderRadius: "3px", cursor: "pointer"}}>
+                  <p className="hide-input-exception m-2" style={{color: "#c5ddeb", fontSize: "14px"}}>+ Add a list</p>
+                </div>
+            }
 
           </div>
         </div>
@@ -149,9 +190,11 @@ const mapDispatchToProps = dispatch => {
     renameBoard: (title, boardId) => (dispatch(renameBoard(title, boardId))),
     addList: (title, boardId) => {dispatch(addList(title, boardId))},
     migrateCard: (cardId, targetListId) => {dispatch(migrateCard(cardId, targetListId))},
-    showInput: () => {dispatch(showBoardInput())},
+    showBoardInput: () => {dispatch(showBoardInput())},
     hideListInput: () => {dispatch(hideListInput())},
-    hideBoardInput: () => {dispatch(hideBoardInput())}
+    hideBoardInput: () => {dispatch(hideBoardInput())},
+    showNewListInput: () => {dispatch(showNewListInput())},
+    hideNewListInput: () => {dispatch(hideNewListInput())}
   }
 }
 
